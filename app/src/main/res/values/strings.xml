@@ -1,0 +1,48 @@
+<resources>
+    <string name="app_name">BookManageApp</string>
+
+    <!-- Actionbar screen text -->
+    <string name="need_to_login">Need to Login</string>
+    <string name="update_user_information">Update User information</string>
+    <string name="received_message">Received message</string>
+    <string name="log_out">Log out</string>
+
+    <!-- login screen $ user info text -->
+    <string name="login_id">ID</string>
+    <string name="login_password">Password</string>
+    <string name="login_sign_in">Sign in</string>
+    <string name="login_sign_up">Sign up</string>
+    <string name="login_name">Name</string>
+    <string name="login_age">Age</string>
+    <string name="login_addr">Address</string>
+    <string name="login_genre">Interest Genre</string>
+    <string name="login_check_id">Check ID duplication</string>
+    <string name="login_submit_data">Submit</string>
+
+
+    <!-- main activity screen text -->
+    <string name="tab_menu_user_book_list">User book list</string>
+    <string name="tab_menu_borrow_book">Borrow new book</string>
+    <string name="tab_menu_reading_history">Reading History</string>
+
+    <!-- list screen text -->
+    <string name="list_add_new_book">Add new Book</string>
+
+    <!-- book info screen text -->
+    <string name="book_info_title">Title</string>
+    <string name="book_info_author">Author</string>
+    <string name="book_info_publisher">Publisher</string>
+    <string name="book_info_year">Year</string>
+    <string name="book_info_book_status">Book Status</string>
+    <string name="book_info_rad_btn_share">Share</string>
+    <string name="book_info_rad_btn_give">Giveaway</string>
+    <string name="book_info_rad_btn_rent">Rent</string>
+    <string name="book_info_rent_fee">Rent Fee</string>
+    <string name="book_info_owner_id">Owner ID</string>
+    <string name="book_info_add_book">Add a book</string>
+    <string name="book_info_update_book">Update a book</string>
+    <string name="book_info_share_book">Share a book</string>
+    <string name="book_info_take_book">Take a book</string>
+    <string name="book_info_rent_book">Rent a book</string>
+
+</resources>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_dropdown_Menu"
+        android:icon="@drawable/baseline_account_circle_black"
+        android:title=""
+        app:showAsAction="always">
+        <menu>
+            <item android:id="@+id/action_update_user_info"
+                android:title="@string/update_user_information" />
+            <item android:id="@+id/action_receive_msg"
+                android:title="@string/received_message" />
+            <item android:id="@+id/action_log_out"
+                android:title="@string/log_out" />
+        </menu>
+    </item>
+</menu>
