@@ -45,4 +45,12 @@
     <string name="book_info_take_book">Take a book</string>
     <string name="book_info_rent_book">Rent a book</string>
 
+    <!-- admin activity text -->
+    <string name="create_demo_data">Create Demo data to DB</string>
+
+    <!-- toast message text -->
+    <string name="toast_cannot_find_id">Cannot find your ID. Try it again.</string>
+    <string name="toast_succeed_to_login">Succeed to login</string>
+    <string name="toast_clicks_left"> clicks left</string>
+    <string name="toast_succeed_to_create_demo_data">Succeed to create Demo data</string>
 </resources>

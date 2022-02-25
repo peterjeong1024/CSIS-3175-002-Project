@@ -15,5 +15,10 @@ public class ConstantValue {
     public static final String SHARED_PREFERENCE_ID_VALUE = "UAid";
     public static final String SHARED_PREFERENCE_PASSWORD_VALUE = "UApw";
 
+    // book status value
+    public static final String BOOK_STATUS_SHARE = "share";
+    public static final String BOOK_STATUS_GIVEAWAY = "give";
+    public static final String BOOK_STATUS_RENT = "rent";
+
 }
 

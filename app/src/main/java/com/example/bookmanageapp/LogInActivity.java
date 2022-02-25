@@ -9,7 +9,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
+import com.example.bookmanageapp.database.DBHelper;
+import com.example.bookmanageapp.database.DBQuery;
 import com.example.bookmanageapp.featureclass.UserAccount;
 import com.example.bookmanageapp.utils.ConstantValue;
 import com.example.bookmanageapp.utils.UseLog;
@@ -20,6 +23,9 @@ public class LogInActivity extends BasementActivity {
     private EditText mPwText;
     private Button mSignInBtn;
     private Button mSignUpBtn;
+
+    private DBHelper mDbHelper;
+    private int mClickCount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +39,25 @@ public class LogInActivity extends BasementActivity {
 
         mSignInBtn.setOnClickListener(btnClickListener);
         mSignUpBtn.setOnClickListener(btnClickListener);
+
+        findViewById(R.id.layout_hidden_menu_btn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mClickCount > 0) {
+                    Toast.makeText(getBaseContext(), mClickCount + " " + getBaseContext().getResources().getString(R.string.toast_clicks_left), Toast.LENGTH_SHORT).show();
+                    mClickCount--;
+                } else {
+                    Intent uIntent = new Intent(getBaseContext(), AdminActivity.class);
+                    startActivity(uIntent);
+                }
+            }
+        });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mClickCount = 5;
     }
 
     View.OnClickListener btnClickListener = new View.OnClickListener() {
@@ -40,15 +65,16 @@ public class LogInActivity extends BasementActivity {
         public void onClick(View view) {
             if (view.getId() == R.id.btn_login_sign_in) {
                 // run login code
-
-                // temp code
-                UserAccount userAccount = new UserAccount("sampleID", "test", "John", 33, "New Westminster", "Computer");
-                setUserAccount(userAccount);
-                getUserAccount().tryLogin(getBaseContext());
-                setResult(Activity.RESULT_OK);
-                finish();
-                // temp code
-
+                mDbHelper = new DBHelper(getBaseContext());
+                UserAccount loginUA = DBQuery.findUserInUSERS(mDbHelper, new UserAccount(mIdText.getText().toString(), mPwText.getText().toString()));
+                if (loginUA == null) {
+                    Toast.makeText(getBaseContext(), getResources().getString(R.string.toast_cannot_find_id), Toast.LENGTH_LONG).show();
+                } else {
+                    setUserAccount(loginUA);
+                    getUserAccount().tryLogin(getBaseContext());
+                    setResult(Activity.RESULT_OK);
+                    finish();
+                }
             } else {
                 // go to sign up activity
                 Intent intent = new Intent(getBaseContext(), UserInfoActivity.class);
@@ -56,14 +82,4 @@ public class LogInActivity extends BasementActivity {
             }
         }
     };
-
-//    @Override
-//    public void onBackPressed() {
-//        UseLog.i("onBackPressed");
-////        super.onBackPressed();
-////        Intent intent = new Intent();
-////        intent.putExtra(ConstantValue.LOGIN_ACTIVITY_INTENT, false);
-//        setResult(ConstantValue.LOGIN_ACTIVITY_RESULT_VALUE);
-//        super.onBackPressed();
-//    }
 }

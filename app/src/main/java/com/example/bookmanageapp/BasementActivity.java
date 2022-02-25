@@ -64,13 +64,17 @@ public class BasementActivity extends AppCompatActivity {
                     UseLog.i("UA is wrong");
                     return false;
                 }
-                Intent intent = new Intent(getBaseContext(), UserInfoActivity.class);
-//                intent.putExtra(ConstantValue.USER_ACCOUNT_INTENT_DATA, getUserAccount());
-                startActivity(intent);
+                Intent uIntent = new Intent(getBaseContext(), UserInfoActivity.class);
+                startActivity(uIntent);
                 return true;
             case R.id.action_receive_msg:
                 // go to msg list screen
-                UseLog.i("action_receive_msg");
+                if (!getUserAccount().isLogin(getBaseContext())) {
+                    UseLog.i("UA is wrong");
+                    return false;
+                }
+                Intent mIntent = new Intent(getBaseContext(), MessageActivity.class);
+                startActivity(mIntent);
                 return true;
             case R.id.action_log_out:
                 // log out and go to main screen

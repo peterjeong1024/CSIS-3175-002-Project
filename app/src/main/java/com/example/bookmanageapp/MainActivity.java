@@ -7,17 +7,27 @@ import androidx.viewpager.widget.ViewPager;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Toast;
 
+import com.amitshekhar.DebugDB;
+import com.example.bookmanageapp.database.DBHelper;
+import com.example.bookmanageapp.database.DBQuery;
+import com.example.bookmanageapp.featureclass.BookItem;
+import com.example.bookmanageapp.featureclass.UserMessages;
+import com.example.bookmanageapp.featureclass.ReadingHistory;
 import com.example.bookmanageapp.featureclass.UserAccount;
 import com.example.bookmanageapp.utils.ConstantValue;
 import com.example.bookmanageapp.utils.UseLog;
 import com.example.bookmanageapp.view.MainViewPagerAdapter;
 import com.google.android.material.tabs.TabLayout;
 
+import java.util.ArrayList;
+
 public class MainActivity extends BasementActivity {
 
-    ViewPager mPager;
-    TabLayout mTabLayout;
+    private ViewPager mPager;
+    private TabLayout mTabLayout;
+    private DBHelper mDbHelper;
 
     private boolean mLoginActivityIsRunning = false;
 
@@ -29,9 +39,13 @@ public class MainActivity extends BasementActivity {
         mPager = findViewById(R.id.main_activity_pager);
         mTabLayout = findViewById(R.id.main_activity_pager_tab_layout);
 
-        MainViewPagerAdapter mPagerAdapter = new MainViewPagerAdapter(getBaseContext());
-        mPager.setAdapter(mPagerAdapter);
-        mTabLayout.setupWithViewPager(mPager);
+        mDbHelper = new DBHelper(getBaseContext());
+
+        // temp code
+//        insertDummyData();
+
+        // code for Database debug
+        DebugDB.getAddressLog();
     }
 
     @Override
@@ -40,30 +54,21 @@ public class MainActivity extends BasementActivity {
         UseLog.i("onResume()");
         if (getUserAccount().isLogin(getBaseContext())) {
             mLoginActivityIsRunning = false;
+
+            ArrayList<BookItem> ownBookList = DBQuery.findUserOwnBookList(mDbHelper, getUserAccount());
+            ArrayList<BookItem> borrowBookList = DBQuery.findBorrowBookList(mDbHelper, getUserAccount());
+            ArrayList<BookItem> readingBookLIst = DBQuery.findReadingBookList(mDbHelper, getUserAccount());
+
+            MainViewPagerAdapter mPagerAdapter =
+                    new MainViewPagerAdapter(getBaseContext(), ownBookList, borrowBookList, readingBookLIst);
+            mPager.setAdapter(mPagerAdapter);
+            mTabLayout.setupWithViewPager(mPager);
         } else {
             if (!mLoginActivityIsRunning) {
                 mStartForResult.launch(new Intent(this, LogInActivity.class));
                 mLoginActivityIsRunning = true;
             }
         }
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        UseLog.i("onStart()");
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        UseLog.i("onStop()");
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        UseLog.i("onPause()");
     }
 
     @Override
@@ -78,6 +83,7 @@ public class MainActivity extends BasementActivity {
                 switch (result.getResultCode()) {
                     case Activity.RESULT_OK:
                         UseLog.i("Activity.RESULT_OK");
+                        Toast.makeText(getBaseContext(), getResources().getString(R.string.toast_succeed_to_login), Toast.LENGTH_LONG).show();
                         break;
                     case Activity.RESULT_CANCELED:
                         UseLog.i("Activity.RESULT_CANCELED");
@@ -89,6 +95,10 @@ public class MainActivity extends BasementActivity {
                 }
             }
     );
+
+
+
+
 
 
 }

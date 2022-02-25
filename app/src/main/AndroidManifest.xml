@@ -9,7 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.BookManageApp">
-        <activity android:name=".UserInfoActivity"></activity>
+        <activity android:name=".AdminActivity"></activity>
+        <activity android:name=".MessageActivity" />
+        <activity android:name=".UserInfoActivity" />
         <activity android:name=".BorrowBookInfoActivity" />
         <activity android:name=".BookInfoActivity" />
         <activity android:name=".LogInActivity" />

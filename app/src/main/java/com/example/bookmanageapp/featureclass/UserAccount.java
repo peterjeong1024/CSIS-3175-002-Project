@@ -21,6 +21,11 @@ public class UserAccount implements Parcelable {
     public UserAccount() {
     }
 
+    public UserAccount(String id, String pw) {
+        this.uId = id;
+        this.password = pw;
+    }
+
     public UserAccount(String id, String pw, String n, int age, String addr, String gen) {
         this.uId = id;
         this.password = pw;
