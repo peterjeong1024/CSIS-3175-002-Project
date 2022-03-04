@@ -2,11 +2,13 @@ package com.example.bookmanageapp;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.viewpager.widget.ViewPager;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.amitshekhar.DebugDB;
@@ -39,7 +41,7 @@ public class MainActivity extends BasementActivity {
         mPager = findViewById(R.id.main_activity_pager);
         mTabLayout = findViewById(R.id.main_activity_pager_tab_layout);
 
-        mDbHelper = new DBHelper(getBaseContext());
+        mDbHelper = new DBHelper(getApplicationContext());
 
         // temp code
 //        insertDummyData();
@@ -52,7 +54,7 @@ public class MainActivity extends BasementActivity {
     protected void onResume() {
         super.onResume();
         UseLog.i("onResume()");
-        if (getUserAccount().isLogin(getBaseContext())) {
+        if (getUserAccount().isLogin(getApplicationContext())) {
             mLoginActivityIsRunning = false;
 
             ArrayList<BookItem> ownBookList = DBQuery.findUserOwnBookList(mDbHelper, getUserAccount());
@@ -60,7 +62,7 @@ public class MainActivity extends BasementActivity {
             ArrayList<BookItem> readingBookLIst = DBQuery.findReadingBookList(mDbHelper, getUserAccount());
 
             MainViewPagerAdapter mPagerAdapter =
-                    new MainViewPagerAdapter(getBaseContext(), ownBookList, borrowBookList, readingBookLIst);
+                    new MainViewPagerAdapter(getApplicationContext(), ownBookList, borrowBookList, readingBookLIst);
             mPager.setAdapter(mPagerAdapter);
             mTabLayout.setupWithViewPager(mPager);
         } else {
@@ -75,7 +77,21 @@ public class MainActivity extends BasementActivity {
     protected void onDestroy() {
         super.onDestroy();
         UseLog.i("onDestroy()");
-        getUserAccount().tryLogout(getBaseContext());
+        getUserAccount().tryLogout(getApplicationContext());
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_log_out:
+                // log out and go to log in screen
+                getUserAccount().tryLogout(getApplicationContext());
+                UseLog.i("action_log_out");
+                onResume();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     ActivityResultLauncher<Intent> mStartForResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
@@ -83,7 +99,7 @@ public class MainActivity extends BasementActivity {
                 switch (result.getResultCode()) {
                     case Activity.RESULT_OK:
                         UseLog.i("Activity.RESULT_OK");
-                        Toast.makeText(getBaseContext(), getResources().getString(R.string.toast_succeed_to_login), Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), getResources().getString(R.string.toast_succeed_to_login), Toast.LENGTH_LONG).show();
                         break;
                     case Activity.RESULT_CANCELED:
                         UseLog.i("Activity.RESULT_CANCELED");
@@ -95,10 +111,4 @@ public class MainActivity extends BasementActivity {
                 }
             }
     );
-
-
-
-
-
-
 }

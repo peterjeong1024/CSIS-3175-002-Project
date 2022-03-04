@@ -5,9 +5,13 @@ import androidx.constraintlayout.widget.ConstraintSet;
 
 import android.os.Bundle;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
+import com.example.bookmanageapp.database.DBHelper;
+import com.example.bookmanageapp.database.DBQuery;
 import com.example.bookmanageapp.featureclass.UserAccount;
 import com.example.bookmanageapp.utils.ConstantValue;
 import com.example.bookmanageapp.utils.UseLog;
@@ -23,16 +27,19 @@ public class UserInfoActivity extends BasementActivity {
     private Button mSubmitBtn;
     private Button mCheckIDBtn;
 
+    private DBHelper mDBHelper;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_info);
 
-        if (!getUserAccount().isLogin(getBaseContext())) {
+        if (!getUserAccount().isLogin(getApplicationContext())) {
             UseLog.i("logout status");
             // send it to login activity
         }
-        ;
+
+        mDBHelper = new DBHelper(getApplicationContext());
 
         mUserIdEdit = findViewById(R.id.edit_user_info_id);
         mUserPwEdit = findViewById(R.id.edit_user_info_pw);
@@ -50,31 +57,76 @@ public class UserInfoActivity extends BasementActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
         // layout redraw
-        if (getUserAccount().isLogin(getBaseContext())) {
+        if (getUserAccount().isLogin(getApplicationContext())) {
             // update user info
             mCheckIDBtn.setVisibility(View.GONE);
+            mUserIdEdit.setEnabled(false);
 
-            UserAccount ua = getUserAccount();
+            UserAccount ua = DBQuery.findUserInUSERS(mDBHelper, getUserAccount());
             mUserIdEdit.setText(ua.getId());
             mUserPwEdit.setText(ua.getPassword());
-
-            // need to contact DB
-
-//            mUserNameEdit.setText(ua.getName());
-//            mUserAgeEdit.setText(String.valueOf(ua.getAge()));
-//            mUserAddrEdit.setText(ua.getAddress());
-//            mUserGenreEdit.setText(ua.getGenre());
+            mUserNameEdit.setText(ua.getName());
+            mUserAgeEdit.setText(String.valueOf(ua.getAge()));
+            mUserAddrEdit.setText(ua.getAddress());
+            mUserGenreEdit.setText(ua.getGenre());
         }
+
+        mUserNameEdit.requestFocus();
     }
 
     View.OnClickListener mSubmitBtnClickListener = new View.OnClickListener() {
 
         @Override
         public void onClick(View view) {
-            UseLog.i("onClick");
+            if (mUserIdEdit.isEnabled()) {
+                // insert new user account process
+                String newID = mUserIdEdit.getText().toString();
+                String newPw = mUserPwEdit.getText().toString();
+                String newName = mUserNameEdit.getText().toString();
+                String newAge = mUserAgeEdit.getText().toString();
+                String newAddr = mUserAddrEdit.getText().toString();
+                String newGenre = mUserGenreEdit.getText().toString();
 
+                if (newID.equals("") || newPw.equals("") || newName.equals("") | newAge.equals("") || newAddr.equals("") || mUserGenreEdit.equals("")) {
+                    Toast.makeText(getApplicationContext(), getResources().getString(R.string.toast_input_data_is_wrong), Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+                UserAccount ua = new UserAccount(newID, newPw, newName, Integer.parseInt(newAge), newAddr, newGenre);
+                if (DBQuery.checkUserIDInUSERS(mDBHelper, ua)) {
+                    Toast.makeText(getApplicationContext(), getResources().getString(R.string.toast_id_already_used), Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+                long result = DBQuery.insertUserToUSERS(mDBHelper, ua);
+                if (result > 0) {
+                    Toast.makeText(getApplicationContext(), getResources().getString(R.string.toast_succeed_to_create_new_account), Toast.LENGTH_LONG).show();
+                    finish();
+                }
+
+            } else {
+                // update user account process
+                String newPw = mUserPwEdit.getText().toString();
+                String newName = mUserNameEdit.getText().toString();
+                String newAge = mUserAgeEdit.getText().toString();
+                String newAddr = mUserAddrEdit.getText().toString();
+                String newGenre = mUserGenreEdit.getText().toString();
+
+                if (newPw.equals("") || newName.equals("") | newAge.equals("") || newAddr.equals("") || mUserGenreEdit.equals("")) {
+                    Toast.makeText(getApplicationContext(), getResources().getString(R.string.toast_input_data_is_wrong), Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+                UserAccount ua = new UserAccount(getUserAccount().getId(), newPw, newName, Integer.parseInt(newAge), newAddr, newGenre);
+                int result = DBQuery.updateUserToUSERS(mDBHelper, ua);
+                if (result > 0) {
+                    setUserAccount(ua);
+                    getUserAccount().tryLogin(getApplicationContext());
+                    Toast.makeText(getApplicationContext(), getResources().getString(R.string.toast_succeed_to_update_your_account), Toast.LENGTH_LONG).show();
+                    finish();
+                }
+            }
         }
     };
 
@@ -82,8 +134,15 @@ public class UserInfoActivity extends BasementActivity {
 
         @Override
         public void onClick(View view) {
-            UseLog.i("onClick");
+            String newID = mUserIdEdit.getText().toString();
+            String newPw = mUserPwEdit.getText().toString();
 
+            UserAccount ua = new UserAccount(newID, newPw);
+            if (DBQuery.checkUserIDInUSERS(mDBHelper, ua)) {
+                Toast.makeText(getApplicationContext(), getResources().getString(R.string.toast_id_already_used), Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(getApplicationContext(), getResources().getString(R.string.toast_this_id_can_use), Toast.LENGTH_LONG).show();
+            }
         }
     };
 }

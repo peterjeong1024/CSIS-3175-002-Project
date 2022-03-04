@@ -44,10 +44,10 @@ public class LogInActivity extends BasementActivity {
             @Override
             public void onClick(View view) {
                 if (mClickCount > 0) {
-                    Toast.makeText(getBaseContext(), mClickCount + " " + getBaseContext().getResources().getString(R.string.toast_clicks_left), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), mClickCount + " " + getApplicationContext().getResources().getString(R.string.toast_clicks_left), Toast.LENGTH_SHORT).show();
                     mClickCount--;
                 } else {
-                    Intent uIntent = new Intent(getBaseContext(), AdminActivity.class);
+                    Intent uIntent = new Intent(getApplicationContext(), AdminActivity.class);
                     startActivity(uIntent);
                 }
             }
@@ -65,19 +65,19 @@ public class LogInActivity extends BasementActivity {
         public void onClick(View view) {
             if (view.getId() == R.id.btn_login_sign_in) {
                 // run login code
-                mDbHelper = new DBHelper(getBaseContext());
+                mDbHelper = new DBHelper(getApplicationContext());
                 UserAccount loginUA = DBQuery.findUserInUSERS(mDbHelper, new UserAccount(mIdText.getText().toString(), mPwText.getText().toString()));
                 if (loginUA == null) {
-                    Toast.makeText(getBaseContext(), getResources().getString(R.string.toast_cannot_find_id), Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), getResources().getString(R.string.toast_cannot_find_id), Toast.LENGTH_LONG).show();
                 } else {
                     setUserAccount(loginUA);
-                    getUserAccount().tryLogin(getBaseContext());
+                    getUserAccount().tryLogin(getApplicationContext());
                     setResult(Activity.RESULT_OK);
                     finish();
                 }
             } else {
                 // go to sign up activity
-                Intent intent = new Intent(getBaseContext(), UserInfoActivity.class);
+                Intent intent = new Intent(getApplicationContext(), UserInfoActivity.class);
                 startActivity(intent);
             }
         }

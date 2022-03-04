@@ -1,14 +1,15 @@
 package com.example.bookmanageapp;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RadioGroup;
+import android.widget.Toast;
 
+import com.example.bookmanageapp.database.DBHelper;
+import com.example.bookmanageapp.database.DBQuery;
 import com.example.bookmanageapp.featureclass.BookItem;
+import com.example.bookmanageapp.featureclass.UserMessages;
 import com.example.bookmanageapp.utils.ConstantValue;
 import com.example.bookmanageapp.utils.UseLog;
 
@@ -24,17 +25,20 @@ public class BorrowBookInfoActivity extends BasementActivity {
 
     private BookItem mBook;
     private int mBookID;
+    private boolean mIsGiveActivity = false;
 
+    private DBHelper mDBHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         UseLog.i("onCreate");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_info);
-        if (!getUserAccount().isLogin(getBaseContext())) {
+        if (!getUserAccount().isLogin(getApplicationContext())) {
             UseLog.i("logout status");
             // send it to login activity
-        };
+        }
+        ;
 
         mTitleEdit = findViewById(R.id.edit_book_info_title);
         mAuthorEdit = findViewById(R.id.edit_book_info_author);
@@ -58,10 +62,14 @@ public class BorrowBookInfoActivity extends BasementActivity {
         // disabled unnecessary elements
         findViewById(R.id.tv_book_info_book_status).setVisibility(View.GONE);
         findViewById(R.id.rg_book_info_book_status).setVisibility(View.GONE);
+
+        mDBHelper = new DBHelper(getApplicationContext());
+        mSubmitBtn.setOnClickListener(SubmitBtnClickListener);
     }
 
     @Override
     protected void onResume() {
+        super.onResume();
         UseLog.i("onResume");
         if (getIntent() != null && getIntent().getParcelableExtra(ConstantValue.BOOK_ITEM_INTENT_DATA) != null) {
             mBook = getIntent().getParcelableExtra(ConstantValue.BOOK_ITEM_INTENT_DATA);
@@ -76,14 +84,70 @@ public class BorrowBookInfoActivity extends BasementActivity {
         mAuthorEdit.setText(mBook.getAuthor());
         mPublisherEdit.setText(mBook.getPublisher());
         mYearEdit.setText(mBook.getPublishYear());
-        mOwnerIDEdit.setText("" + mBookID);
+        mOwnerIDEdit.setText(mBook.getOwnerID());
+        mRentFeeEdit.setText(String.valueOf(mBook.getRentFee()));
 
+        switch (mBook.getStatus()) {
+            case ConstantValue.BOOK_STATUS_SHARE:
+                mSubmitBtn.setText(getApplicationContext().getResources().getString(R.string.book_info_share_book));
+                mIsGiveActivity = false;
+                break;
+            case ConstantValue.BOOK_STATUS_GIVEAWAY:
+                mSubmitBtn.setText(getApplicationContext().getResources().getString(R.string.book_info_take_book));
+                mIsGiveActivity = true;
+                break;
+            case ConstantValue.BOOK_STATUS_RENT:
+                mSubmitBtn.setText(getApplicationContext().getResources().getString(R.string.book_info_rent_book));
+                mIsGiveActivity = false;
+                break;
+        }
 
-
-
-        mSubmitBtn.setText(getBaseContext().getResources().getString(R.string.book_info_share_book));
-
-
-        super.onResume();
+        mSubmitBtn.requestFocus();
     }
+
+
+    View.OnClickListener SubmitBtnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            if (mIsGiveActivity) {
+                // giveaway book process
+                // int bookID, String title, String author, String publisher, String publishYear, String ownerID,
+                // String renterID, String status, float rentFee, boolean isRead
+                // change ownerID, renterID
+                String oldOwnerID = mBook.getOwnerID();
+                BookItem bookItem = mBook;
+                bookItem.setOwnerID(getUserAccount().getId());
+                bookItem.setRenterID(getUserAccount().getId());
+                long result = DBQuery.updateBookInfoToBOOK(mDBHelper, bookItem);
+                if (result > 0) {
+                    Toast.makeText(getApplicationContext(),
+                            getResources().getString(R.string.toast_succeed_to_take_this_book), Toast.LENGTH_LONG).show();
+                    // String userID, String senderID, String sentMsgTxt
+                    UserMessages um = new UserMessages(oldOwnerID, bookItem.getRenterID(),
+                            getResources().getString(R.string.user_msg_your_book_is_given) + " " + mBook.getRenterID());
+                    DBQuery.insertMessagesToMSG(mDBHelper, um);
+                    finish();
+                }
+            } else {
+                // borrow book process
+                // int bookID, String title, String author, String publisher, String publishYear, String ownerID,
+                // String renterID, String status, float rentFee, boolean isRead
+                // change renterID
+                BookItem bookItem = mBook;
+                bookItem.setRenterID(getUserAccount().getId());
+                long result = DBQuery.updateBookInfoToBOOK(mDBHelper, bookItem);
+                if (result > 0) {
+                    Toast.makeText(getApplicationContext(),
+                            getResources().getString(R.string.toast_succeed_to_borrow_this_book), Toast.LENGTH_LONG).show();
+                    // String userID, String senderID, String sentMsgTxt
+                    UserMessages um = new UserMessages(mBook.getOwnerID(), bookItem.getRenterID(),
+                            getResources().getString(R.string.user_msg_your_book_is_borrowed) + " " + mBook.getRenterID());
+                    DBQuery.insertMessagesToMSG(mDBHelper, um);
+                    finish();
+                }
+            }
+
+
+        }
+    };
 }

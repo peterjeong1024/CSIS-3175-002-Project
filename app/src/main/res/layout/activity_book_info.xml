@@ -98,7 +98,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/book_info_item_margin_left"
                 android:layout_marginTop="@dimen/book_info_item_margin_top"
-                android:inputType="text"
+                android:inputType="number"
                 android:textSize="@dimen/book_info_string_size"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_book_info_year" />
@@ -125,18 +125,21 @@
                 app:layout_constraintTop_toBottomOf="@id/tv_book_info_book_status">
 
                 <RadioButton
+                    android:id="@+id/rb_share"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/book_info_rad_btn_share"
                     android:textSize="@dimen/book_info_string_size" />
 
                 <RadioButton
+                    android:id="@+id/rb_giveaway"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/book_info_rad_btn_give"
                     android:textSize="@dimen/book_info_string_size" />
 
                 <RadioButton
+                    android:id="@+id/rb_rent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/book_info_rad_btn_rent"
@@ -162,7 +165,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/book_info_item_margin_left"
                 android:layout_marginTop="@dimen/book_info_item_margin_top"
-                android:inputType="text"
+                android:inputType="numberDecimal"
                 android:textSize="@dimen/book_info_string_size"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_book_info_rent_fee" />

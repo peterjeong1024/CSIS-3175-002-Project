@@ -21,7 +21,7 @@ public class MessageActivity extends BasementActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_message);
-        if (!getUserAccount().isLogin(getBaseContext())) {
+        if (!getUserAccount().isLogin(getApplicationContext())) {
             UseLog.i("logout status");
             // send it to login activity
         };
@@ -29,10 +29,10 @@ public class MessageActivity extends BasementActivity {
 
         ListView lvLayout = findViewById(R.id.listview_message);
 
-        mDBHelper = new DBHelper(getBaseContext());
+        mDBHelper = new DBHelper(getApplicationContext());
         ArrayList<UserMessages> messages = DBQuery.findUserMsgList(mDBHelper, getUserAccount());
 
-        UserMessageListAdapter msgListAdapter = new UserMessageListAdapter(getBaseContext(), messages);
+        UserMessageListAdapter msgListAdapter = new UserMessageListAdapter(getApplicationContext(), messages);
         lvLayout.setAdapter(msgListAdapter);
     }
 }

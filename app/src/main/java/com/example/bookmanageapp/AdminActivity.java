@@ -25,14 +25,14 @@ public class AdminActivity extends BasementActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin);
 
-        mDbHelper = new DBHelper(getBaseContext());
+        mDbHelper = new DBHelper(getApplicationContext());
 
         Button createDemoDataBtn = findViewById(R.id.btn_create_demo_data);
         createDemoDataBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 insertDummyData();
-                Toast.makeText(getBaseContext(), getBaseContext().getResources().getString(R.string.toast_succeed_to_create_demo_data), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toast_succeed_to_create_demo_data), Toast.LENGTH_SHORT).show();
             }
         });
     }

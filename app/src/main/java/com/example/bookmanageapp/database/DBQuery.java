@@ -3,7 +3,9 @@ package com.example.bookmanageapp.database;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.widget.Toast;
 
+import com.example.bookmanageapp.R;
 import com.example.bookmanageapp.featureclass.BookItem;
 import com.example.bookmanageapp.featureclass.UserMessages;
 import com.example.bookmanageapp.featureclass.UserAccount;
@@ -108,6 +110,20 @@ public class DBQuery {
         return db.insert(USERS.TABLE_NAME, null, values);
     }
 
+    public static int updateUserToUSERS(DBHelper dbHelper, UserAccount ua) {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(USERS.COLUMN_NAME_USERPW, ua.getPassword());
+        values.put(USERS.COLUMN_NAME_USERNAME, ua.getName());
+        values.put(USERS.COLUMN_NAME_USERAGE, ua.getAge());
+        values.put(USERS.COLUMN_NAME_USERADDR, ua.getAddress());
+        values.put(USERS.COLUMN_NAME_GENRE, ua.getGenre());
+
+        String[] whereArgs = new String[] {String.valueOf(ua.getId())};
+        return db.update(USERS.TABLE_NAME, values, USERS.COLUMN_NAME_USERID + "=?", whereArgs);
+    }
+
     public static UserAccount findUserInUSERS(DBHelper dbHelper, UserAccount ua) {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
 
@@ -141,6 +157,33 @@ public class DBQuery {
         return ua;
     }
 
+    public static boolean checkUserIDInUSERS(DBHelper dbHelper, UserAccount ua) {
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+
+        String selection = USERS.COLUMN_NAME_USERID + " = ?";
+        String[] selectionArgs = {ua.getId()};
+
+        Cursor cursor = db.query(
+                USERS.TABLE_NAME,   // The table to query
+                null,           // The array of columns to return (pass null to get all) = SELECT
+                selection,              // The columns for the WHERE clause
+                selectionArgs,          // The values for the WHERE clause
+                null,           // groupBy
+                null,            // having
+                null            // orderBy
+        );
+
+        if (cursor != null && cursor.moveToNext()) {
+            cursor.close();
+            UseLog.i("ID exist");
+            return true;
+        } else {
+            cursor.close();
+            UseLog.i("ID not exist");
+            return false;
+        }
+    }
+
     public static long insertBookInfoToBOOK(DBHelper dbHelper, BookItem bi) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
@@ -156,6 +199,23 @@ public class DBQuery {
         values.put(BOOK.COLUMN_NAME_ISREAD, bi.isRead());
 
         return db.insert(BOOK.TABLE_NAME, null, values);
+    }
+
+    public static int updateBookInfoToBOOK(DBHelper dbHelper, BookItem bi) {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(BOOK.COLUMN_NAME_TITLE, bi.getTitle());
+        values.put(BOOK.COLUMN_NAME_AUTHOR, bi.getAuthor());
+        values.put(BOOK.COLUMN_NAME_PUBLISHER, bi.getPublisher());
+        values.put(BOOK.COLUMN_NAME_YEAR, bi.getPublishYear());
+        values.put(BOOK.COLUMN_NAME_STATUS, bi.getStatus());
+        values.put(BOOK.COLUMN_NAME_RENTFEE, bi.getRentFee());
+        values.put(BOOK.COLUMN_NAME_OWNERID, bi.getOwnerID());
+        values.put(BOOK.COLUMN_NAME_RENTERID, bi.getRenterID());
+
+        String[] whereArgs = new String[] {String.valueOf(bi.getBookID())};
+        return db.update(BOOK.TABLE_NAME, values, BOOK.COLUMN_NAME_BOOKID + "= ?", whereArgs);
     }
 
     public static ArrayList<BookItem> findUserOwnBookList(DBHelper dbHelper, UserAccount ua) {
