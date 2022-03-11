@@ -4,7 +4,6 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -14,6 +13,7 @@ import androidx.annotation.Nullable;
 
 import com.example.bookmanageapp.R;
 import com.example.bookmanageapp.featureclass.BookItem;
+import com.example.bookmanageapp.featureclass.ReadingHistory;
 import com.example.bookmanageapp.utils.UseLog;
 
 import java.util.ArrayList;
@@ -21,7 +21,7 @@ import java.util.ArrayList;
 public class ReadingHistoryListAdapter extends ArrayAdapter {
 
     private Context mContext;
-    private ArrayList<BookItem> mDisplayData;
+    private ArrayList<ReadingHistory> mDisplayData;
 
     private ImageView mIconImageView;
     private TextView mTitleTextView;
@@ -40,14 +40,15 @@ public class ReadingHistoryListAdapter extends ArrayAdapter {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.booklist_item_layout, parent, false);
         }
 
-        BookItem book = mDisplayData.get(position);
+        ReadingHistory bookHistory = mDisplayData.get(position);
         mIconImageView = convertView.findViewById(R.id.iv_list_item_layout);
         mIconImageView.setImageDrawable(mContext.getResources().getDrawable(R.drawable.own_book_icon));
 
+        UseLog.i(bookHistory.getBookID() + bookHistory.getBookTitle() );
         mTitleTextView = convertView.findViewById(R.id.tv_list_item_title);
-        mTitleTextView.setText(book.getTitle());
+        mTitleTextView.setText(bookHistory.getBookTitle());
         mTextView3 = convertView.findViewById(R.id.tv_list_item_layout_3);
-        mTextView3.setText(book.getTitle());
+        mTextView3.setText(bookHistory.getReadDate());
 
         return convertView;
     }

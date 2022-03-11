@@ -11,6 +11,8 @@
                 android:title="@string/update_user_information" />
             <item android:id="@+id/action_receive_msg"
                 android:title="@string/received_message" />
+            <item android:id="@+id/action_reading_history"
+                android:title="@string/reading_history" />
             <item android:id="@+id/action_log_out"
                 android:title="@string/log_out" />
         </menu>

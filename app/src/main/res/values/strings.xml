@@ -5,6 +5,7 @@
     <string name="need_to_login">Need to Login</string>
     <string name="update_user_information">Update User information</string>
     <string name="received_message">Received message</string>
+    <string name="reading_history">Reading History</string>
     <string name="log_out">Log out</string>
 
     <!-- login screen $ user info text -->
@@ -21,9 +22,9 @@
 
 
     <!-- main activity screen text -->
-    <string name="tab_menu_user_book_list">User book list</string>
+    <string name="tab_menu_user_book_list">User book</string>
     <string name="tab_menu_borrow_book">Borrow new book</string>
-    <string name="tab_menu_reading_history">Reading History</string>
+    <string name="tab_menu_reading_history">Tracking Reading Book</string>
 
     <!-- list screen text -->
     <string name="list_add_new_book">Add new Book</string>
@@ -64,7 +65,12 @@
     <string name="toast_succeed_to_create_new_account">Succeed to create new account. Please login with new account.</string>
     <string name="toast_succeed_to_add_new_book">Succeed to add new book.</string>
     <string name="toast_succeed_to_update_your_book_info">Succeed to update your book information.</string>
+    <string name="toast_failed_to_update_your_book_info">Failed to update your book information.</string>
     <string name="toast_succeed_to_borrow_this_book">Succeed to borrow this book.</string>
     <string name="toast_succeed_to_take_this_book">Succeed to take this book.</string>
+
+    <!-- reading tracker screen text -->
+    <string name="reading_tracker_reading_now">Reading now</string>
+    <string name="reading_tracker_hold_the_reading">Stop reading</string>
 
 </resources>

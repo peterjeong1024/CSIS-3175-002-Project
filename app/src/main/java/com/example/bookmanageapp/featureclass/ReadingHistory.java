@@ -1,14 +1,21 @@
 package com.example.bookmanageapp.featureclass;
 
+import java.util.Date;
+
 public class ReadingHistory {
     private String userID;
     private int bookID;
-    private boolean isRead;
+    private String bookTitle;
+    private String readDate;
 
-    public ReadingHistory(String userID, int bookID, boolean isRead) {
+    public ReadingHistory() {
+    }
+
+    public ReadingHistory(String userID, int bookID, String bookTitle, String readDate) {
         this.userID = userID;
         this.bookID = bookID;
-        this.isRead = isRead;
+        this.bookTitle = bookTitle;
+        this.readDate = readDate;
     }
 
     public String getUserID() {
@@ -27,11 +34,19 @@ public class ReadingHistory {
         this.bookID = bookID;
     }
 
-    public boolean isRead() {
-        return isRead;
+    public String getBookTitle() {
+        return bookTitle;
     }
 
-    public void setRead(boolean read) {
-        isRead = read;
+    public void setBookTitle(String bookTitle) {
+        this.bookTitle = bookTitle;
+    }
+
+    public String getReadDate() {
+        return readDate;
+    }
+
+    public void setReadDate(String readDate) {
+        this.readDate = readDate;
     }
 }

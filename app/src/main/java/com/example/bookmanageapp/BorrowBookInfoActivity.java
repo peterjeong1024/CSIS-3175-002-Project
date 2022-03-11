@@ -38,7 +38,6 @@ public class BorrowBookInfoActivity extends BasementActivity {
             UseLog.i("logout status");
             // send it to login activity
         }
-        ;
 
         mTitleEdit = findViewById(R.id.edit_book_info_title);
         mAuthorEdit = findViewById(R.id.edit_book_info_author);

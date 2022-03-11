@@ -3,6 +3,8 @@ package com.example.bookmanageapp;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.ListView;
 
 import com.example.bookmanageapp.database.DBHelper;
@@ -25,7 +27,6 @@ public class MessageActivity extends BasementActivity {
             UseLog.i("logout status");
             // send it to login activity
         };
-        UseLog.i(getUserAccount().getId() + getUserAccount().getPassword());
 
         ListView lvLayout = findViewById(R.id.listview_message);
 
@@ -34,5 +35,13 @@ public class MessageActivity extends BasementActivity {
 
         UserMessageListAdapter msgListAdapter = new UserMessageListAdapter(getApplicationContext(), messages);
         lvLayout.setAdapter(msgListAdapter);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        MenuItem item = menu.findItem(R.id.action_receive_msg);
+        item.setVisible(false);
+        return true;
     }
 }

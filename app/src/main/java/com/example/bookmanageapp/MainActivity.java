@@ -32,6 +32,7 @@ public class MainActivity extends BasementActivity {
     private DBHelper mDbHelper;
 
     private boolean mLoginActivityIsRunning = false;
+    private int mViewPagerPage = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +43,20 @@ public class MainActivity extends BasementActivity {
         mTabLayout = findViewById(R.id.main_activity_pager_tab_layout);
 
         mDbHelper = new DBHelper(getApplicationContext());
+        mPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                mViewPagerPage = position;
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+            }
+        });
 
         // temp code
 //        insertDummyData();
@@ -65,6 +80,7 @@ public class MainActivity extends BasementActivity {
                     new MainViewPagerAdapter(getApplicationContext(), ownBookList, borrowBookList, readingBookLIst);
             mPager.setAdapter(mPagerAdapter);
             mTabLayout.setupWithViewPager(mPager);
+            mPager.setCurrentItem(mViewPagerPage);
         } else {
             if (!mLoginActivityIsRunning) {
                 mStartForResult.launch(new Intent(this, LogInActivity.class));

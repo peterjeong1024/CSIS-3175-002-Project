@@ -7,6 +7,7 @@ import android.widget.Toast;
 
 import com.example.bookmanageapp.R;
 import com.example.bookmanageapp.featureclass.BookItem;
+import com.example.bookmanageapp.featureclass.ReadingHistory;
 import com.example.bookmanageapp.featureclass.UserMessages;
 import com.example.bookmanageapp.featureclass.UserAccount;
 import com.example.bookmanageapp.utils.UseLog;
@@ -51,6 +52,14 @@ public class DBQuery {
         public static final String COLUMN_NAME_SENTMSGTEXT = "SentMsgText";
     }
 
+    public static class READINGHISTORY {
+        public static final String TABLE_NAME = "READINGHISTORY";
+        public static final String COLUMN_NAME_USERID = "UserID";
+        public static final String COLUMN_NAME_BOOKID = "BookID";
+        public static final String COLUMN_NAME_BOOKTITLE = "BookTitle";
+        public static final String COLUMN_NAME_READDATE = "ReadDate";
+    }
+
 
     public static final String SQL_CREATE_USERS_ENTRIES =
             "CREATE TABLE " + USERS.TABLE_NAME + " (" +
@@ -80,6 +89,13 @@ public class DBQuery {
                     MESSAGES.COLUMN_NAME_SENDERID + " TEXT," +
                     MESSAGES.COLUMN_NAME_SENTMSGTEXT + " TEXT)";
 
+    public static final String SQL_CREATE_READINGHISTORY_ENTRIES =
+            "CREATE TABLE " + READINGHISTORY.TABLE_NAME + " (" +
+                    READINGHISTORY.COLUMN_NAME_USERID + " TEXT," +
+                    READINGHISTORY.COLUMN_NAME_BOOKID + " INTEGER," +
+                    READINGHISTORY.COLUMN_NAME_BOOKTITLE + " TEXT," +
+                    READINGHISTORY.COLUMN_NAME_READDATE + " TEXT)";
+
 
     public static final String SQL_DELETE_USERS_ENTRIES =
             "DROP TABLE IF EXISTS " + USERS.TABLE_NAME;
@@ -90,6 +106,8 @@ public class DBQuery {
     public static final String SQL_DELETE_MESSAGES_ENTRIES =
             "DROP TABLE IF EXISTS " + MESSAGES.TABLE_NAME;
 
+    public static final String SQL_DELETE_READINGHISTORY_ENTRIES =
+            "DROP TABLE IF EXISTS " + READINGHISTORY.TABLE_NAME;
 
 
     /*
@@ -209,10 +227,11 @@ public class DBQuery {
         values.put(BOOK.COLUMN_NAME_AUTHOR, bi.getAuthor());
         values.put(BOOK.COLUMN_NAME_PUBLISHER, bi.getPublisher());
         values.put(BOOK.COLUMN_NAME_YEAR, bi.getPublishYear());
-        values.put(BOOK.COLUMN_NAME_STATUS, bi.getStatus());
-        values.put(BOOK.COLUMN_NAME_RENTFEE, bi.getRentFee());
         values.put(BOOK.COLUMN_NAME_OWNERID, bi.getOwnerID());
         values.put(BOOK.COLUMN_NAME_RENTERID, bi.getRenterID());
+        values.put(BOOK.COLUMN_NAME_STATUS, bi.getStatus());
+        values.put(BOOK.COLUMN_NAME_RENTFEE, bi.getRentFee());
+        values.put(BOOK.COLUMN_NAME_ISREAD, bi.isRead());
 
         String[] whereArgs = new String[] {String.valueOf(bi.getBookID())};
         return db.update(BOOK.TABLE_NAME, values, BOOK.COLUMN_NAME_BOOKID + "= ?", whereArgs);
@@ -393,6 +412,53 @@ public class DBQuery {
         return msgList;
     }
 
+    public static long insertHistoryToRHISTORY(DBHelper dbHelper, ReadingHistory rh) {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(READINGHISTORY.COLUMN_NAME_USERID, rh.getUserID());
+        values.put(READINGHISTORY.COLUMN_NAME_BOOKID, rh.getBookID());
+        values.put(READINGHISTORY.COLUMN_NAME_BOOKTITLE, rh.getBookTitle());
+        values.put(READINGHISTORY.COLUMN_NAME_READDATE, rh.getReadDate());
+
+        return db.insert(READINGHISTORY.TABLE_NAME, null, values);
+    }
+
+    public static ArrayList<ReadingHistory> findReadingHistoryList(DBHelper dbHelper, UserAccount ua) {
+        ArrayList<ReadingHistory> historyList = new ArrayList<ReadingHistory>();
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+
+        String selection = READINGHISTORY.COLUMN_NAME_USERID + " = ?";
+        String[] selectionArgs = {ua.getId()};
+
+        Cursor cursor = db.query(
+                READINGHISTORY.TABLE_NAME,   // The table to query
+                null,           // The array of columns to return (pass null to get all) = SELECT
+                selection,              // The columns for the WHERE clause
+                selectionArgs,          // The values for the WHERE clause
+                null,           // groupBy
+                null,            // having
+                null            // orderBy
+        );
+
+        if (cursor == null) {
+            UseLog.i("cursor is wrong");
+            cursor.close();
+            return null;
+        } else {
+            while (cursor.moveToNext()) {
+                ReadingHistory um = new ReadingHistory();
+                um.setUserID(cursor.getString(cursor.getColumnIndexOrThrow(READINGHISTORY.COLUMN_NAME_USERID)));
+                um.setBookID(cursor.getInt(cursor.getColumnIndexOrThrow(READINGHISTORY.COLUMN_NAME_BOOKID)));
+                um.setBookTitle(cursor.getString(cursor.getColumnIndexOrThrow(READINGHISTORY.COLUMN_NAME_BOOKTITLE)));
+                um.setReadDate(cursor.getString(cursor.getColumnIndexOrThrow(READINGHISTORY.COLUMN_NAME_READDATE)));
+                historyList.add(um);
+            }
+            cursor.close();
+        }
+
+        return historyList;
+    }
 
 }
 

@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
+import com.example.bookmanageapp.featureclass.ReadingHistory;
 import com.example.bookmanageapp.featureclass.UserAccount;
 import com.example.bookmanageapp.utils.ConstantValue;
 import com.example.bookmanageapp.utils.UseLog;
@@ -76,6 +77,10 @@ public class BasementActivity extends AppCompatActivity {
                 }
                 Intent uIntent = new Intent(getApplicationContext(), UserInfoActivity.class);
                 startActivity(uIntent);
+                if (!getLocalClassName().equals(MainActivity.class.getSimpleName())) {
+                    UseLog.i("This activity is not a MainActivity. finish()");
+                    finish();
+                }
                 return true;
             case R.id.action_receive_msg:
                 // go to msg list screen
@@ -85,6 +90,22 @@ public class BasementActivity extends AppCompatActivity {
                 }
                 Intent mIntent = new Intent(getApplicationContext(), MessageActivity.class);
                 startActivity(mIntent);
+                if (!getLocalClassName().equals(MainActivity.class.getSimpleName())) {
+                    UseLog.i("This activity is not a MainActivity. finish()");
+                    finish();
+                }
+                return true;
+            case R.id.action_reading_history:
+                if (!getUserAccount().isLogin(getApplicationContext())) {
+                    UseLog.i("UA is wrong");
+                    return false;
+                }
+                Intent rIntent = new Intent(getApplicationContext(), ReadingHistoryActivity.class);
+                startActivity(rIntent);
+                if (!getLocalClassName().equals(MainActivity.class.getSimpleName())) {
+                    UseLog.i("This activity is not a MainActivity. finish()");
+                    finish();
+                }
                 return true;
             case R.id.action_log_out:
                 // log out and go to main screen
@@ -92,6 +113,7 @@ public class BasementActivity extends AppCompatActivity {
                 UseLog.i("action_log_out");
                 finish();
                 return true;
+
             default:
                 return super.onOptionsItemSelected(item);
         }

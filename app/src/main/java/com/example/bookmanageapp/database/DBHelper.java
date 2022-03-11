@@ -17,6 +17,7 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL(DBQuery.SQL_CREATE_USERS_ENTRIES);
         db.execSQL(DBQuery.SQL_CREATE_BOOK_ENTRIES);
         db.execSQL(DBQuery.SQL_CREATE_MESSAGES_ENTRIES);
+        db.execSQL(DBQuery.SQL_CREATE_READINGHISTORY_ENTRIES);
     }
 
     @Override
@@ -24,6 +25,7 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL(DBQuery.SQL_DELETE_USERS_ENTRIES);
         db.execSQL(DBQuery.SQL_DELETE_BOOK_ENTRIES);
         db.execSQL(DBQuery.SQL_DELETE_MESSAGES_ENTRIES);
+        db.execSQL(DBQuery.SQL_DELETE_READINGHISTORY_ENTRIES);
         onCreate(db);
     }
 

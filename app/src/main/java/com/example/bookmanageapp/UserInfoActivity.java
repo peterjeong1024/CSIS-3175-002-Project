@@ -4,6 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintSet;
 
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -52,6 +55,14 @@ public class UserInfoActivity extends BasementActivity {
 
         mSubmitBtn.setOnClickListener(mSubmitBtnClickListener);
         mCheckIDBtn.setOnClickListener(mCheckBtnClickListener);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        MenuItem item = menu.findItem(R.id.action_update_user_info);
+        item.setVisible(false);
+        return true;
     }
 
     @Override

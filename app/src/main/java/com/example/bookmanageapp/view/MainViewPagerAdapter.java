@@ -28,13 +28,13 @@ public class MainViewPagerAdapter extends PagerAdapter {
 
     private ArrayList<BookItem> mOwnBookList;
     private ArrayList<BookItem> mBorrowBookList;
-    private ArrayList<BookItem> mHistoryBookList;
+    private ArrayList<BookItem> mTrackerBookList;
 
     public MainViewPagerAdapter(Context mContext, ArrayList<BookItem> ownList, ArrayList<BookItem> borrowLIst, ArrayList<BookItem> historyList) {
         this.mContext = mContext;
         mOwnBookList = ownList;
         mBorrowBookList = borrowLIst;
-        mHistoryBookList = historyList;
+        mTrackerBookList = historyList;
     }
 
     @NonNull
@@ -74,7 +74,7 @@ public class MainViewPagerAdapter extends PagerAdapter {
                 case 2:
                     view = inflater.inflate(R.layout.main_tab_history_booklist_layout, container, false);
                     ListView mRHistoryListListView = view.findViewById(R.id.listview_history_booklist);
-                    ReadingHistoryListAdapter rHistoryListAdapter = new ReadingHistoryListAdapter(mContext, mHistoryBookList);
+                    ReadingTrackerListAdapter rHistoryListAdapter = new ReadingTrackerListAdapter(mContext, mTrackerBookList);
                     mRHistoryListListView.setAdapter(rHistoryListAdapter);
                     break;
             }
