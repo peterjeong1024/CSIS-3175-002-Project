@@ -4,7 +4,6 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -14,9 +13,10 @@ import androidx.annotation.Nullable;
 
 import com.example.bookmanageapp.R;
 import com.example.bookmanageapp.featureclass.BookItem;
-import com.example.bookmanageapp.utils.UseLog;
+import com.example.bookmanageapp.utils.ConstantValue;
 
 import java.util.ArrayList;
+
 
 public class OwnBookListAdapter extends ArrayAdapter {
 
@@ -25,6 +25,8 @@ public class OwnBookListAdapter extends ArrayAdapter {
 
     private ImageView mIconImageView;
     private TextView mTitleTextView;
+    private TextView mTextView1;
+    private TextView mTextView2;
     private TextView mTextView3;
 
     public OwnBookListAdapter(Context context, ArrayList data) {
@@ -46,8 +48,25 @@ public class OwnBookListAdapter extends ArrayAdapter {
 
         mTitleTextView = convertView.findViewById(R.id.tv_list_item_title);
         mTitleTextView.setText(book.getTitle());
+        mTextView1 = convertView.findViewById(R.id.tv_list_item_layout_1);
+        mTextView1.setText(book.getAuthor());
+        mTextView2 = convertView.findViewById(R.id.tv_list_item_layout_2);
+        mTextView2.setText(book.getPublisher());
         mTextView3 = convertView.findViewById(R.id.tv_list_item_layout_3);
-        mTextView3.setText(book.getTitle());
+        String txtBuild;
+        if (book.getOwnerID().equals(book.getRenterID())) {
+            // owned now
+            txtBuild = mContext.getResources().getString(R.string.book_list_own);
+        } else {
+            // shared or rented
+            if (book.getStatus().equals(ConstantValue.BOOK_STATUS_RENT)) {
+                txtBuild = String.format("%s %s", mContext.getResources().getString(R.string.book_list_rent), book.getRenterID());
+            } else {
+                txtBuild = String.format("%s %s", mContext.getResources().getString(R.string.book_list_share), book.getRenterID());
+            }
+        }
+
+        mTextView3.setText(txtBuild);
 
         return convertView;
     }

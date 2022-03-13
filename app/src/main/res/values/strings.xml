@@ -25,6 +25,13 @@
     <string name="tab_menu_user_book_list">User book</string>
     <string name="tab_menu_borrow_book">Borrow new book</string>
     <string name="tab_menu_reading_history">Tracking Reading Book</string>
+    <string name="book_list_own">Own</string>
+    <string name="book_list_share">Share to</string>
+    <string name="book_list_rent">Rent to</string>
+    <string name="dialog_end_app_title">Finish the app</string>
+    <string name="dialog_end_app_description">Are you finished the app?</string>
+    <string name="dialog_end_app_ok">OK</string>
+    <string name="dialog_end_app_cancel">Cancel</string>
 
     <!-- list screen text -->
     <string name="list_add_new_book">Add new Book</string>

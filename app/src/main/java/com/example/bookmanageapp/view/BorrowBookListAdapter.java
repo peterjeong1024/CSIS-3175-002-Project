@@ -14,6 +14,7 @@ import androidx.annotation.Nullable;
 
 import com.example.bookmanageapp.R;
 import com.example.bookmanageapp.featureclass.BookItem;
+import com.example.bookmanageapp.utils.ConstantValue;
 import com.example.bookmanageapp.utils.UseLog;
 
 import java.util.ArrayList;
@@ -25,6 +26,8 @@ public class BorrowBookListAdapter extends ArrayAdapter {
 
     private ImageView mIconImageView;
     private TextView mTitleTextView;
+    private TextView mTextView1;
+    private TextView mTextView2;
     private TextView mTextView3;
 
     public BorrowBookListAdapter(Context context, ArrayList data) {
@@ -46,8 +49,12 @@ public class BorrowBookListAdapter extends ArrayAdapter {
 
         mTitleTextView = convertView.findViewById(R.id.tv_list_item_title);
         mTitleTextView.setText(book.getTitle());
+        mTextView1 = convertView.findViewById(R.id.tv_list_item_layout_1);
+        mTextView1.setText(book.getAuthor());
+        mTextView2 = convertView.findViewById(R.id.tv_list_item_layout_2);
+        mTextView2.setText(book.getPublisher());
         mTextView3 = convertView.findViewById(R.id.tv_list_item_layout_3);
-        mTextView3.setText(book.getTitle());
+        mTextView3.setText(String.format("%s %s", book.getOwnerID(), mContext.getResources().getString(R.string.book_list_own)));
 
         return convertView;
     }

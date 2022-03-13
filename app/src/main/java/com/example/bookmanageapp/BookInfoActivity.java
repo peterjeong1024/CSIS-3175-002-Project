@@ -12,8 +12,12 @@ import android.widget.Toast;
 import com.example.bookmanageapp.database.DBHelper;
 import com.example.bookmanageapp.database.DBQuery;
 import com.example.bookmanageapp.featureclass.BookItem;
+import com.example.bookmanageapp.featureclass.ReadingHistory;
 import com.example.bookmanageapp.utils.ConstantValue;
 import com.example.bookmanageapp.utils.UseLog;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class BookInfoActivity extends BasementActivity {
 
@@ -140,6 +144,15 @@ public class BookInfoActivity extends BasementActivity {
                 long result = DBQuery.insertBookInfoToBOOK(mDBHelper, bookItem);
                 if (result > 0) {
                     Toast.makeText(getApplicationContext(), getResources().getString(R.string.toast_succeed_to_add_new_book), Toast.LENGTH_LONG).show();
+
+                    //make new Reading history
+                    Date date = new Date( System.currentTimeMillis());
+                    SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+                    String getTime = sdf.format(date);
+                    ReadingHistory rh = new ReadingHistory(
+                            getUserAccount().getId(), bookItem.getBookID(), bookItem.getTitle(), getTime);
+                    DBQuery.insertHistoryToRHISTORY(mDBHelper, rh);
+
                     finish();
                 }
             } else {

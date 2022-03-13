@@ -9,9 +9,13 @@ import android.widget.Toast;
 import com.example.bookmanageapp.database.DBHelper;
 import com.example.bookmanageapp.database.DBQuery;
 import com.example.bookmanageapp.featureclass.BookItem;
+import com.example.bookmanageapp.featureclass.ReadingHistory;
 import com.example.bookmanageapp.featureclass.UserMessages;
 import com.example.bookmanageapp.utils.ConstantValue;
 import com.example.bookmanageapp.utils.UseLog;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class BorrowBookInfoActivity extends BasementActivity {
 
@@ -108,15 +112,16 @@ public class BorrowBookInfoActivity extends BasementActivity {
     View.OnClickListener SubmitBtnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
+            BookItem bookItem = mBook;
             if (mIsGiveActivity) {
                 // giveaway book process
                 // int bookID, String title, String author, String publisher, String publishYear, String ownerID,
                 // String renterID, String status, float rentFee, boolean isRead
                 // change ownerID, renterID
                 String oldOwnerID = mBook.getOwnerID();
-                BookItem bookItem = mBook;
                 bookItem.setOwnerID(getUserAccount().getId());
                 bookItem.setRenterID(getUserAccount().getId());
+                bookItem.setRead(false);
                 long result = DBQuery.updateBookInfoToBOOK(mDBHelper, bookItem);
                 if (result > 0) {
                     Toast.makeText(getApplicationContext(),
@@ -125,6 +130,14 @@ public class BorrowBookInfoActivity extends BasementActivity {
                     UserMessages um = new UserMessages(oldOwnerID, bookItem.getRenterID(),
                             getResources().getString(R.string.user_msg_your_book_is_given) + " " + mBook.getRenterID());
                     DBQuery.insertMessagesToMSG(mDBHelper, um);
+
+                    //make new Reading history
+                    Date date = new Date( System.currentTimeMillis());
+                    SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+                    String getTime = sdf.format(date);
+                    ReadingHistory rh = new ReadingHistory(
+                            getUserAccount().getId(), bookItem.getBookID(), bookItem.getTitle(), getTime);
+                    DBQuery.insertHistoryToRHISTORY(mDBHelper, rh);
                     finish();
                 }
             } else {
@@ -132,8 +145,8 @@ public class BorrowBookInfoActivity extends BasementActivity {
                 // int bookID, String title, String author, String publisher, String publishYear, String ownerID,
                 // String renterID, String status, float rentFee, boolean isRead
                 // change renterID
-                BookItem bookItem = mBook;
                 bookItem.setRenterID(getUserAccount().getId());
+                bookItem.setRead(false);
                 long result = DBQuery.updateBookInfoToBOOK(mDBHelper, bookItem);
                 if (result > 0) {
                     Toast.makeText(getApplicationContext(),
@@ -142,11 +155,17 @@ public class BorrowBookInfoActivity extends BasementActivity {
                     UserMessages um = new UserMessages(mBook.getOwnerID(), bookItem.getRenterID(),
                             getResources().getString(R.string.user_msg_your_book_is_borrowed) + " " + mBook.getRenterID());
                     DBQuery.insertMessagesToMSG(mDBHelper, um);
+
+                    //make new Reading history
+                    Date date = new Date( System.currentTimeMillis());
+                    SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+                    String getTime = sdf.format(date);
+                    ReadingHistory rh = new ReadingHistory(
+                            getUserAccount().getId(), bookItem.getBookID(), bookItem.getTitle(), getTime);
+                    DBQuery.insertHistoryToRHISTORY(mDBHelper, rh);
                     finish();
                 }
             }
-
-
         }
     };
 }

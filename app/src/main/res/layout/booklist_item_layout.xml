@@ -16,9 +16,7 @@
         android:layout_width="@dimen/list_item_title_layout_width"
         android:layout_height="@dimen/list_item_layout_height"
         android:layout_marginStart="@dimen/list_item_title_layout_margin_left"
-        android:ellipsize="marquee"
-        android:focusable="true"
-        android:marqueeRepeatLimit="marquee_forever"
+        android:ellipsize="end"
         android:textAlignment="textStart"
         android:textColor="@color/black"
         android:textSize="@dimen/list_item_title_text_size" />
@@ -33,9 +31,7 @@
             android:id="@+id/tv_list_item_layout_1"
             android:layout_width="match_parent"
             android:layout_height="@dimen/list_item_inner_textview_height"
-            android:ellipsize="marquee"
-            android:focusable="true"
-            android:marqueeRepeatLimit="marquee_forever"
+            android:ellipsize="end"
             android:textAlignment="textEnd"
             android:textColor="@color/black"
             android:textSize="@dimen/list_item_inner_textview_text_size" />
@@ -44,9 +40,7 @@
             android:id="@+id/tv_list_item_layout_2"
             android:layout_width="match_parent"
             android:layout_height="@dimen/list_item_inner_textview_height"
-            android:ellipsize="marquee"
-            android:focusable="true"
-            android:marqueeRepeatLimit="marquee_forever"
+            android:ellipsize="end"
             android:textAlignment="textEnd"
             android:textColor="@color/black"
             android:textSize="@dimen/list_item_inner_textview_text_size" />
@@ -55,9 +49,7 @@
             android:id="@+id/tv_list_item_layout_3"
             android:layout_width="match_parent"
             android:layout_height="@dimen/list_item_inner_textview_height"
-            android:ellipsize="marquee"
-            android:focusable="true"
-            android:marqueeRepeatLimit="marquee_forever"
+            android:ellipsize="end"
             android:textAlignment="textEnd"
             android:textColor="@color/black"
             android:textSize="@dimen/list_item_inner_textview_text_size" />
