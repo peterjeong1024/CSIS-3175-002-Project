@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -52,7 +53,7 @@ public class MainViewPagerAdapter extends PagerAdapter {
                     OwnBookListAdapter ownBookListAdapter = new OwnBookListAdapter(mContext, mOwnBookList);
                     mOwnBookListListView.setAdapter(ownBookListAdapter);
 
-                    TextView tv = view.findViewById(R.id.tv_own_booklist_add_btn);
+                    Button tv = view.findViewById(R.id.tv_own_booklist_add_btn);
                     tv.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {

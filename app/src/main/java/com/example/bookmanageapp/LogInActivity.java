@@ -3,7 +3,9 @@ package com.example.bookmanageapp;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Notification;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -58,6 +60,32 @@ public class LogInActivity extends BasementActivity {
     protected void onResume() {
         super.onResume();
         mClickCount = 5;
+    }
+
+    @Override
+    public void onBackPressed() {
+        UseLog.i("onBackPressed");
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(this.getResources().getString(R.string.dialog_end_app_title));
+        builder.setMessage(this.getResources().getString(R.string.dialog_end_app_description));
+        builder.setIcon(android.R.drawable.ic_dialog_alert);
+
+        builder.setPositiveButton(this.getResources().getString(R.string.dialog_end_app_ok), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                finish();
+            }
+        });
+
+        builder.setNegativeButton(this.getResources().getString(R.string.dialog_end_app_cancel), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.cancel();
+            }
+        });
+        builder.setCancelable(true);
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
     View.OnClickListener btnClickListener = new View.OnClickListener() {

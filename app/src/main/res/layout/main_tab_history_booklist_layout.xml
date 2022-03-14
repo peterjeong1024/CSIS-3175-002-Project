@@ -8,6 +8,8 @@
         android:id="@+id/listview_history_booklist"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:dividerHeight="2dp"
+        android:divider="@color/gray_600"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

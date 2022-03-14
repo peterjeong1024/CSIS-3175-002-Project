@@ -50,8 +50,8 @@ public class ReadingTrackerListAdapter extends ArrayAdapter {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.readingtrackerlist_item_layout, parent, false);
         }
         BookItem book = mDisplayData.get(position);
-        mIconImageView = convertView.findViewById(R.id.iv_tracker_list_item_layout);
-        mIconImageView.setImageDrawable(mContext.getResources().getDrawable(R.drawable.own_book_icon));
+
+
 
         mTitleTextView = convertView.findViewById(R.id.tv_tracker_list_item_title);
         mTitleTextView.setText(book.getTitle());
@@ -60,11 +60,14 @@ public class ReadingTrackerListAdapter extends ArrayAdapter {
         mTgIsRead.setTag(position);
         mTgIsRead.setOnClickListener(mTgClickListener);
 
+        mIconImageView = convertView.findViewById(R.id.iv_tracker_list_item_layout);
         mTextView1 = convertView.findViewById(R.id.tv_tracker_list_item_layout_1);
         if (book.isRead()) {
             mTextView1.setText(mContext.getResources().getString(R.string.reading_tracker_reading_now));
+            mIconImageView.setImageDrawable(mContext.getResources().getDrawable(R.drawable.bookmark_fill));
         } else {
             mTextView1.setText(mContext.getResources().getString(R.string.reading_tracker_hold_the_reading));
+            mIconImageView.setImageDrawable(mContext.getResources().getDrawable(R.drawable.bookmark_empty));
         }
         return convertView;
     }
@@ -86,8 +89,10 @@ public class ReadingTrackerListAdapter extends ArrayAdapter {
 
             if (bookItem.isRead()) {
                 mTextView1.setText(mContext.getResources().getString(R.string.reading_tracker_reading_now));
+                mIconImageView.setImageDrawable(mContext.getResources().getDrawable(R.drawable.bookmark_fill));
             } else {
                 mTextView1.setText(mContext.getResources().getString(R.string.reading_tracker_hold_the_reading));
+                mIconImageView.setImageDrawable(mContext.getResources().getDrawable(R.drawable.bookmark_empty));
             }
             notifyDataSetChanged();
         }

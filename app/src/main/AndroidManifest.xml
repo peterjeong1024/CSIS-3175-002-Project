@@ -9,15 +9,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.BookManageApp">
-        <activity android:name=".ReadingHistoryActivity" />
-        <activity android:name=".AdminActivity" />
-        <activity android:name=".MessageActivity" />
-        <activity android:name=".UserInfoActivity" />
-        <activity android:name=".BorrowBookInfoActivity" />
-        <activity android:name=".BookInfoActivity" />
-        <activity android:name=".LogInActivity" />
-        <activity android:name=".BasementActivity" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".ReadingHistoryActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".AdminActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".MessageActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".UserInfoActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".BorrowBookInfoActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".BookInfoActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".LogInActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".BasementActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".MainActivity" android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
