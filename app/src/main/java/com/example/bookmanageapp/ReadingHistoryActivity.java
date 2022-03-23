@@ -45,8 +45,10 @@ public class ReadingHistoryActivity extends BasementActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
-        MenuItem item = menu.findItem(R.id.action_reading_history);
-        item.setVisible(false);
+        if (getUserAccount().isLogin(getApplicationContext())) {
+            MenuItem item = menu.findItem(R.id.action_reading_history);
+            item.setVisible(false);
+        }
         return true;
     }
 }
