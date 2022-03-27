@@ -2,7 +2,13 @@ package com.example.bookmanageapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -14,6 +20,7 @@ import com.example.bookmanageapp.featureclass.ReadingHistory;
 import com.example.bookmanageapp.featureclass.UserAccount;
 import com.example.bookmanageapp.featureclass.UserMessages;
 import com.example.bookmanageapp.utils.ConstantValue;
+import com.example.bookmanageapp.utils.UseLog;
 
 import java.util.ArrayList;
 
@@ -36,6 +43,41 @@ public class AdminActivity extends BasementActivity {
                 Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toast_succeed_to_create_demo_data), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        UseLog.i("onBackPressed");
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(this.getResources().getString(R.string.dialog_end_admin_title));
+        builder.setMessage(this.getResources().getString(R.string.dialog_end_admin_description));
+        builder.setIcon(android.R.drawable.ic_dialog_alert);
+
+        builder.setPositiveButton(this.getResources().getString(R.string.dialog_end_app_ok), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                getUserAccount().tryLogout(getApplicationContext());
+                setResult(ConstantValue.ADMIN_ACTIVITY_RESULT_FINISH);
+                finish();
+            }
+        });
+
+        builder.setNegativeButton(this.getResources().getString(R.string.dialog_end_app_cancel), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.cancel();
+            }
+        });
+        builder.setCancelable(true);
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.actionbar_logout, menu);
+        return true;
     }
 
 
@@ -63,9 +105,9 @@ public class AdminActivity extends BasementActivity {
 
     private ArrayList<UserAccount> createDemoUserData() {
         ArrayList<UserAccount> demoData = new ArrayList();
-        demoData.add(new UserAccount("user1", "test", "John", 33, "New Westminster", "Computer"));
-        demoData.add(new UserAccount("user2", "test", "Sam", 45, "New Westminster", "Computer"));
-        demoData.add(new UserAccount("user3", "test", "Tina", 22, "New Westminster", "Computer"));
+        demoData.add(new UserAccount("user1", "test", "John", 33, "New Westminster", "Computer", false));
+        demoData.add(new UserAccount("user2", "test", "Sam", 45, "New Westminster", "Computer", false));
+        demoData.add(new UserAccount("user3", "test", "Tina", 22, "New Westminster", "Computer", false));
         return demoData;
     }
 

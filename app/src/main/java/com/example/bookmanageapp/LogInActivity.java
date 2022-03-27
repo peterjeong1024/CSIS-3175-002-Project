@@ -27,7 +27,7 @@ public class LogInActivity extends BasementActivity {
     private Button mSignUpBtn;
 
     private DBHelper mDbHelper;
-    private int mClickCount;
+//    private int mClickCount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,24 +42,25 @@ public class LogInActivity extends BasementActivity {
         mSignInBtn.setOnClickListener(btnClickListener);
         mSignUpBtn.setOnClickListener(btnClickListener);
 
-        findViewById(R.id.layout_hidden_menu_btn).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (mClickCount > 0) {
-                    Toast.makeText(getApplicationContext(), mClickCount + " " + getApplicationContext().getResources().getString(R.string.toast_clicks_left), Toast.LENGTH_SHORT).show();
-                    mClickCount--;
-                } else {
-                    Intent uIntent = new Intent(getApplicationContext(), AdminActivity.class);
-                    startActivity(uIntent);
-                }
-            }
-        });
+        // change the way to AdminActivity. This way is disappeared (committed at 26Mar2022)
+//        findViewById(R.id.layout_hidden_menu_btn).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                if (mClickCount > 0) {
+//                    Toast.makeText(getApplicationContext(), mClickCount + " " + getApplicationContext().getResources().getString(R.string.toast_clicks_left), Toast.LENGTH_SHORT).show();
+//                    mClickCount--;
+//                } else {
+//                    Intent uIntent = new Intent(getApplicationContext(), AdminActivity.class);
+//                    startActivity(uIntent);
+//                }
+//            }
+//        });
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        mClickCount = 5;
+//        mClickCount = 5;
     }
 
     @Override
@@ -103,7 +104,7 @@ public class LogInActivity extends BasementActivity {
                     setResult(Activity.RESULT_OK);
                     finish();
                 }
-            } else {
+            } else if (view.getId() == R.id.btn_login_sign_up) {
                 // go to sign up activity
                 Intent intent = new Intent(getApplicationContext(), UserInfoActivity.class);
                 startActivity(intent);

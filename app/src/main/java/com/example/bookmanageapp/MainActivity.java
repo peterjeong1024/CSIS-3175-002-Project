@@ -62,6 +62,9 @@ public class MainActivity extends BasementActivity {
 
         // code for Database debug
         DebugDB.getAddressLog();
+
+        // add admin account if it is not existed in DB
+        checkAdminAccount();
     }
 
     @Override
@@ -80,6 +83,14 @@ public class MainActivity extends BasementActivity {
             mPager.setAdapter(mPagerAdapter);
             mTabLayout.setupWithViewPager(mPager);
             mPager.setCurrentItem(mViewPagerPage);
+
+            // change the way to AdminActivity. This way is created. (committed at 26Mar2022)
+            if (getUserAccount().getId().equals(ConstantValue.ADMIN_ACCOUNT_ID)
+                    && getUserAccount().getPassword().equals(ConstantValue.ADMIN_ACCOUNT_PASSWORD)) {
+
+                DBQuery.findUserInUSERS(mDbHelper, getUserAccount());
+                mStartForResult.launch(new Intent(this, AdminActivity.class));
+            }
         } else {
             if (!mLoginActivityIsRunning) {
                 mStartForResult.launch(new Intent(this, LogInActivity.class));
@@ -147,9 +158,18 @@ public class MainActivity extends BasementActivity {
                         mLoginActivityIsRunning = true;
                         finish();
                         break;
+                    case ConstantValue.ADMIN_ACTIVITY_RESULT_FINISH:
                     default:
                         break;
                 }
             }
     );
+
+    private void checkAdminAccount() {
+        UserAccount ua = new UserAccount(ConstantValue.ADMIN_ACCOUNT_ID, ConstantValue.ADMIN_ACCOUNT_PASSWORD);
+        if (DBQuery.findUserInUSERS(mDbHelper, ua) == null) {
+            DBQuery.insertUserToUSERS(mDbHelper,
+                    new UserAccount("admin", "admin", "admin", 99, "New Westminster", "Computer", true));
+        }
+    }
 }

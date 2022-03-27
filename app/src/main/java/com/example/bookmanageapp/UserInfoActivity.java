@@ -106,7 +106,7 @@ public class UserInfoActivity extends BasementActivity {
                     return;
                 }
 
-                UserAccount ua = new UserAccount(newID, newPw, newName, Integer.parseInt(newAge), newAddr, newGenre);
+                UserAccount ua = new UserAccount(newID, newPw, newName, Integer.parseInt(newAge), newAddr, newGenre, false);
                 if (DBQuery.checkUserIDInUSERS(mDBHelper, ua)) {
                     Toast.makeText(getApplicationContext(), getResources().getString(R.string.toast_id_already_used), Toast.LENGTH_LONG).show();
                     return;
@@ -131,7 +131,7 @@ public class UserInfoActivity extends BasementActivity {
                     return;
                 }
 
-                UserAccount ua = new UserAccount(getUserAccount().getId(), newPw, newName, Integer.parseInt(newAge), newAddr, newGenre);
+                UserAccount ua = new UserAccount(getUserAccount().getId(), newPw, newName, Integer.parseInt(newAge), newAddr, newGenre, false);
                 int result = DBQuery.updateUserToUSERS(mDBHelper, ua);
                 if (result > 0) {
                     setUserAccount(ua);

@@ -29,6 +29,7 @@ public class DBQuery {
         public static final String COLUMN_NAME_USERAGE = "UserAge";
         public static final String COLUMN_NAME_USERADDR = "UserAddr";
         public static final String COLUMN_NAME_GENRE = "Genre";
+        public static final String COLUMN_NAME_ISADMIN = "IsAdmin";
     }
 
     public static class BOOK {
@@ -68,7 +69,8 @@ public class DBQuery {
                     USERS.COLUMN_NAME_USERNAME + " TEXT," +
                     USERS.COLUMN_NAME_USERAGE + " INTEGER," +
                     USERS.COLUMN_NAME_USERADDR + " TEXT," +
-                    USERS.COLUMN_NAME_GENRE + " TEXT)";
+                    USERS.COLUMN_NAME_GENRE + " TEXT," +
+                    USERS.COLUMN_NAME_ISADMIN + " BOOLEAN)";
 
     public static final String SQL_CREATE_BOOK_ENTRIES =
             "CREATE TABLE " + BOOK.TABLE_NAME + " (" +
@@ -124,6 +126,7 @@ public class DBQuery {
         values.put(USERS.COLUMN_NAME_USERAGE, ua.getAge());
         values.put(USERS.COLUMN_NAME_USERADDR, ua.getAddress());
         values.put(USERS.COLUMN_NAME_GENRE, ua.getGenre());
+        values.put(USERS.COLUMN_NAME_ISADMIN, ua.isAdmin());
 
         return db.insert(USERS.TABLE_NAME, null, values);
     }
@@ -138,7 +141,7 @@ public class DBQuery {
         values.put(USERS.COLUMN_NAME_USERADDR, ua.getAddress());
         values.put(USERS.COLUMN_NAME_GENRE, ua.getGenre());
 
-        String[] whereArgs = new String[] {String.valueOf(ua.getId())};
+        String[] whereArgs = new String[]{String.valueOf(ua.getId())};
         return db.update(USERS.TABLE_NAME, values, USERS.COLUMN_NAME_USERID + "=?", whereArgs);
     }
 
@@ -147,7 +150,7 @@ public class DBQuery {
 
         String selection = USERS.COLUMN_NAME_USERID + " = ? AND " + USERS.COLUMN_NAME_USERPW + " = ?";
         String[] selectionArgs = {ua.getId(), ua.getPassword()};
-
+        UseLog.i(selectionArgs[0] + " " + selectionArgs[1]);
         Cursor cursor = db.query(
                 USERS.TABLE_NAME,   // The table to query
                 null,           // The array of columns to return (pass null to get all) = SELECT
@@ -165,6 +168,7 @@ public class DBQuery {
             ua.setAge(cursor.getInt(cursor.getColumnIndexOrThrow(USERS.COLUMN_NAME_USERAGE)));
             ua.setAddress(cursor.getString(cursor.getColumnIndexOrThrow(USERS.COLUMN_NAME_USERADDR)));
             ua.setGenre(cursor.getString(cursor.getColumnIndexOrThrow(USERS.COLUMN_NAME_GENRE)));
+            ua.setAdmin(cursor.getInt(cursor.getColumnIndexOrThrow(USERS.COLUMN_NAME_ISADMIN)) == 1);
             cursor.close();
         } else {
             UseLog.i("cursor is wrong");
@@ -233,7 +237,7 @@ public class DBQuery {
         values.put(BOOK.COLUMN_NAME_RENTFEE, bi.getRentFee());
         values.put(BOOK.COLUMN_NAME_ISREAD, bi.isRead());
 
-        String[] whereArgs = new String[] {String.valueOf(bi.getBookID())};
+        String[] whereArgs = new String[]{String.valueOf(bi.getBookID())};
         return db.update(BOOK.TABLE_NAME, values, BOOK.COLUMN_NAME_BOOKID + "= ?", whereArgs);
     }
 

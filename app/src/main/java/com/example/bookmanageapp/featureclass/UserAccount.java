@@ -15,6 +15,7 @@ public class UserAccount implements Parcelable {
     private int age = 0;
     private String address = null;
     private String genre = null;
+    private boolean isAdmin = false;
 
     private SharedPreferences mSPref;
 
@@ -26,13 +27,14 @@ public class UserAccount implements Parcelable {
         this.password = pw;
     }
 
-    public UserAccount(String id, String pw, String n, int age, String addr, String gen) {
-        this.uId = id;
-        this.password = pw;
-        this.name = n;
+    public UserAccount(String uId, String password, String name, int age, String address, String genre, boolean isAdmin) {
+        this.uId = uId;
+        this.password = password;
+        this.name = name;
         this.age = age;
-        this.address = addr;
-        this.genre = gen;
+        this.address = address;
+        this.genre = genre;
+        this.isAdmin = isAdmin;
     }
 
     protected UserAccount(Parcel in) {
@@ -42,6 +44,7 @@ public class UserAccount implements Parcelable {
         age = in.readInt();
         address = in.readString();
         genre = in.readString();
+        isAdmin = in.readByte() != 0;
     }
 
     public static final Creator<UserAccount> CREATOR = new Creator<UserAccount>() {
@@ -153,5 +156,13 @@ public class UserAccount implements Parcelable {
 
     public void setGenre(String genre) {
         this.genre = genre;
+    }
+
+    public boolean isAdmin() {
+        return isAdmin;
+    }
+
+    public void setAdmin(boolean admin) {
+        isAdmin = admin;
     }
 }
