@@ -18,7 +18,7 @@ public class DBQuery {
 
     /*
         define table name and column name
-        table : USERS, BOOK, MESSAGES
+        table : USERS, BOOK, MESSAGES, READINGHISTORY
      */
 
     public static class USERS {
