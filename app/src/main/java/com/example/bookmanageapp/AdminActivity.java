@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -34,8 +35,50 @@ public class AdminActivity extends BasementActivity {
         setContentView(R.layout.activity_admin);
 
         mDbHelper = new DBHelper(getApplicationContext());
-
+        Button view = findViewById(R.id.btnAdminView);
+        Button update = findViewById(R.id.btnUpdate);
+        Button delete = findViewById(R.id.btnAdminDelete);
+        Button add = findViewById(R.id.btnAddUser);
         Button createDemoDataBtn = findViewById(R.id.btn_create_demo_data);
+        Button message = findViewById(R.id.btnMessage);
+
+        message.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(AdminActivity.this,AdminMessage.class));
+            }
+        });
+
+
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(AdminActivity.this,AdminViewAccount.class));
+            }
+        });
+
+        delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(AdminActivity.this,AdminDeleteAccount.class));
+            }
+        });
+
+        //add User
+        add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(AdminActivity.this,AdminAddUser.class));
+            }
+        });
+
+        //update
+        update.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(AdminActivity.this, AdminUpdate.class));
+            }
+        });
         createDemoDataBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

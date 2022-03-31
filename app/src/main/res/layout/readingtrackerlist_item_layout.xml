@@ -2,8 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="@dimen/list_item_layout_height"
-    android:descendantFocusability="blocksDescendants"
-    >
+    android:background="#DCD3CC"
+    android:descendantFocusability="blocksDescendants">
 
     <ImageView
         android:id="@+id/iv_tracker_list_item_layout"
@@ -39,7 +39,7 @@
         <Switch
             android:id="@+id/tg_tracker_list_item_btn"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/list_item_layout_height"/>
+            android:layout_height="@dimen/list_item_layout_height" />
 
     </LinearLayout>
 

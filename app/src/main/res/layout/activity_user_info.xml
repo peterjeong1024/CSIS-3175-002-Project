@@ -8,7 +8,9 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -35,7 +37,9 @@
                 android:inputType="text"
                 android:textSize="@dimen/user_info_string_size"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_user_info_id" />
+                app:layout_constraintTop_toBottomOf="@id/tv_user_info_id"
+                tools:ignore="SpeakableTextPresentCheck"
+                android:importantForAutofill="no" />
 
             <Button
                 android:id="@+id/btn_edit_user_info_id_check"
@@ -43,10 +47,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/user_info_item_margin_left"
                 android:layout_marginTop="@dimen/user_info_item_margin_top"
+                android:backgroundTint="#bb937E"
                 android:text="@string/login_check_id"
                 android:textSize="@dimen/user_info_small_string_size"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/edit_user_info_id" />
+                app:layout_constraintTop_toBottomOf="@id/edit_user_info_id"
+                tools:ignore="TextContrastCheck" />
 
             <TextView
                 android:id="@+id/tv_user_info_pw"
@@ -68,7 +74,8 @@
                 android:inputType="textPassword"
                 android:textSize="@dimen/user_info_string_size"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_user_info_pw" />
+                app:layout_constraintTop_toBottomOf="@id/tv_user_info_pw"
+                android:importantForAutofill="no" />
 
             <TextView
                 android:id="@+id/tv_user_info_name"
@@ -90,7 +97,8 @@
                 android:inputType="text"
                 android:textSize="@dimen/user_info_string_size"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_user_info_name" />
+                app:layout_constraintTop_toBottomOf="@id/tv_user_info_name"
+                android:importantForAutofill="no" />
 
             <TextView
                 android:id="@+id/tv_user_info_age"
@@ -112,7 +120,8 @@
                 android:inputType="number"
                 android:textSize="@dimen/user_info_string_size"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_user_info_age" />
+                app:layout_constraintTop_toBottomOf="@id/tv_user_info_age"
+                android:importantForAutofill="no" />
 
             <TextView
                 android:id="@+id/tv_user_info_addr"
@@ -134,7 +143,8 @@
                 android:inputType="text"
                 android:textSize="@dimen/user_info_string_size"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_user_info_addr" />
+                app:layout_constraintTop_toBottomOf="@id/tv_user_info_addr"
+                android:importantForAutofill="no" />
 
             <TextView
                 android:id="@+id/tv_user_info_genre"
@@ -156,7 +166,8 @@
                 android:inputType="text"
                 android:textSize="@dimen/user_info_string_size"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_user_info_genre" />
+                app:layout_constraintTop_toBottomOf="@id/tv_user_info_genre"
+                android:importantForAutofill="no" />
 
             <Button
                 android:id="@+id/btn_user_info_submit"

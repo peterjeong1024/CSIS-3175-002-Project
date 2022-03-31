@@ -64,10 +64,10 @@ public class ReadingTrackerListAdapter extends ArrayAdapter {
         mTextView1 = convertView.findViewById(R.id.tv_tracker_list_item_layout_1);
         if (book.isRead()) {
             mTextView1.setText(mContext.getResources().getString(R.string.reading_tracker_reading_now));
-            mIconImageView.setImageDrawable(mContext.getResources().getDrawable(R.drawable.bookmark_fill));
+            mIconImageView.setImageDrawable(mContext.getResources().getDrawable(R.drawable.bookmark1));
         } else {
             mTextView1.setText(mContext.getResources().getString(R.string.reading_tracker_hold_the_reading));
-            mIconImageView.setImageDrawable(mContext.getResources().getDrawable(R.drawable.bookmark_empty));
+            mIconImageView.setImageDrawable(mContext.getResources().getDrawable(R.drawable.bookmark2));
         }
         return convertView;
     }
@@ -89,10 +89,10 @@ public class ReadingTrackerListAdapter extends ArrayAdapter {
 
             if (bookItem.isRead()) {
                 mTextView1.setText(mContext.getResources().getString(R.string.reading_tracker_reading_now));
-                mIconImageView.setImageDrawable(mContext.getResources().getDrawable(R.drawable.bookmark_fill));
+                mIconImageView.setImageDrawable(mContext.getResources().getDrawable(R.drawable.bookmark1));
             } else {
                 mTextView1.setText(mContext.getResources().getString(R.string.reading_tracker_hold_the_reading));
-                mIconImageView.setImageDrawable(mContext.getResources().getDrawable(R.drawable.bookmark_empty));
+                mIconImageView.setImageDrawable(mContext.getResources().getDrawable(R.drawable.bookmark2));
             }
             notifyDataSetChanged();
         }

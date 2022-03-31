@@ -9,15 +9,50 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.BookManageApp">
-        <activity android:name=".ReadingHistoryActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".AdminActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".MessageActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".UserInfoActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".BorrowBookInfoActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".BookInfoActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".LogInActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".BasementActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".MainActivity" android:screenOrientation="portrait">
+        <activity
+            android:name=".AdminMessage"
+            android:exported="false" />
+        <activity
+            android:name=".AdminAddUser"
+            android:exported="false" />
+        <activity
+            android:name=".AdminUpdate"
+            android:exported="false" />
+        <activity
+            android:name=".AdminDeleteAccount"
+            android:exported="false"
+            android:label="Delete Account" />
+        <activity
+            android:name=".AdminViewAccount"
+            android:exported="false"
+            android:label="View Account" />
+        <activity
+            android:name=".ReadingHistoryActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".AdminActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".MessageActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".UserInfoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".BorrowBookInfoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".BookInfoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".LogInActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".BasementActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".MainActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

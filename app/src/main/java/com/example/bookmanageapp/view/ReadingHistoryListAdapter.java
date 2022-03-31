@@ -42,7 +42,7 @@ public class ReadingHistoryListAdapter extends ArrayAdapter {
 
         ReadingHistory bookHistory = mDisplayData.get(position);
         mIconImageView = convertView.findViewById(R.id.iv_list_item_layout);
-        mIconImageView.setImageDrawable(mContext.getResources().getDrawable(R.drawable.own_book_icon));
+        mIconImageView.setImageDrawable(mContext.getResources().getDrawable(R.drawable.book));
 
         UseLog.i(bookHistory.getBookID() + bookHistory.getBookTitle() );
         mTitleTextView = convertView.findViewById(R.id.tv_list_item_title);

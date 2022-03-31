@@ -45,7 +45,7 @@ public class BorrowBookListAdapter extends ArrayAdapter {
 
         BookItem book = mDisplayData.get(position);
         mIconImageView = convertView.findViewById(R.id.iv_list_item_layout);
-        mIconImageView.setImageDrawable(mContext.getResources().getDrawable(R.drawable.borrow_book_icon));
+        mIconImageView.setImageDrawable(mContext.getResources().getDrawable(R.drawable.time));
 
         mTitleTextView = convertView.findViewById(R.id.tv_list_item_title);
         mTitleTextView.setText(book.getTitle());
