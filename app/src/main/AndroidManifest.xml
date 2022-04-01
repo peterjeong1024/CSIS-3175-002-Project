@@ -9,23 +9,36 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.BookManageApp">
+        <activity android:name=".OpeningActivity"
+            android:theme="@style/Theme.BookManageApp.NoActionBar"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".AdminMessage"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".AdminAddUser"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".AdminUpdate"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".AdminDeleteAccount"
             android:exported="false"
-            android:label="Delete Account" />
+            android:label="Delete Account"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".AdminViewAccount"
             android:exported="false"
-            android:label="View Account" />
+            android:label="View Account"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ReadingHistoryActivity"
             android:screenOrientation="portrait" />
@@ -53,11 +66,6 @@
         <activity
             android:name=".MainActivity"
             android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
     </application>
 

@@ -428,6 +428,19 @@ public class DBQuery {
         return db.insert(READINGHISTORY.TABLE_NAME, null, values);
     }
 
+    public static int updateHistoryToRHISTORY(DBHelper dbHelper, ReadingHistory rh) {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(READINGHISTORY.COLUMN_NAME_USERID, rh.getUserID());
+        values.put(READINGHISTORY.COLUMN_NAME_BOOKID, rh.getBookID());
+        values.put(READINGHISTORY.COLUMN_NAME_BOOKTITLE, rh.getBookTitle());
+        values.put(READINGHISTORY.COLUMN_NAME_READDATE, rh.getReadDate());
+
+        String[] whereArgs = new String[]{String.valueOf(rh.getBookID())};
+        return db.update(READINGHISTORY.TABLE_NAME, values, READINGHISTORY.COLUMN_NAME_BOOKID + "= ?", whereArgs);
+    }
+
     public static ArrayList<ReadingHistory> findReadingHistoryList(DBHelper dbHelper, UserAccount ua) {
         ArrayList<ReadingHistory> historyList = new ArrayList<ReadingHistory>();
         SQLiteDatabase db = dbHelper.getReadableDatabase();

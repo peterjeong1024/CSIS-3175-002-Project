@@ -145,12 +145,13 @@ public class BookInfoActivity extends BasementActivity {
                 if (result > 0) {
                     Toast.makeText(getApplicationContext(), getResources().getString(R.string.toast_succeed_to_add_new_book), Toast.LENGTH_LONG).show();
 
+
                     //make new Reading history
                     Date date = new Date( System.currentTimeMillis());
                     SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
                     String getTime = sdf.format(date);
                     ReadingHistory rh = new ReadingHistory(
-                            getUserAccount().getId(), bookItem.getBookID(), bookItem.getTitle(), getTime);
+                            getUserAccount().getId(), (int) result, bookItem.getTitle(), getTime);
                     DBQuery.insertHistoryToRHISTORY(mDBHelper, rh);
 
                     finish();

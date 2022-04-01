@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- opening screen dimension -->
+    <dimen name="opening_textview_margin_top">100dp</dimen>
+    <dimen name="opening_textview_text_size">40sp</dimen>
+
     <!-- login screen dimension -->
     <dimen name="login_item_margin_left">50dp</dimen>
     <dimen name="login_item_margin_top">30dp</dimen>
