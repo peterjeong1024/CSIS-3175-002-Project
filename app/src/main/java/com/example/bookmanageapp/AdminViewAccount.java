@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.database.Cursor;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -12,7 +14,7 @@ import com.example.bookmanageapp.database.DBHelper;
 import com.example.bookmanageapp.database.DBQuery;
 
 //Created by Jeongin
-public class AdminViewAccount extends AppCompatActivity {
+public class AdminViewAccount extends BasementActivity {
     DBHelper dbHelper;
 
     @Override
@@ -35,7 +37,12 @@ public class AdminViewAccount extends AppCompatActivity {
             Toast.makeText(AdminViewAccount.this, "Account doesn't exist", Toast.LENGTH_SHORT).show();
         }
         showData.setText(str);
+    }
 
-
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.actionbar_logout, menu);
+        return true;
     }
 }

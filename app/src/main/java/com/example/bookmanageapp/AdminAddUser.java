@@ -3,6 +3,8 @@ package com.example.bookmanageapp;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -11,7 +13,7 @@ import android.widget.Toast;
 import com.example.bookmanageapp.database.DBHelper;
 import com.example.bookmanageapp.database.DBQuery;
 
-public class AdminAddUser extends AppCompatActivity {
+public class AdminAddUser extends BasementActivity {
 
     DBHelper dbHelper = new DBHelper(this);
 
@@ -34,7 +36,6 @@ public class AdminAddUser extends AppCompatActivity {
             String ID, Password, Name, Age, Address, Genre;
             Boolean isInserted;
 
-
             @Override
             public void onClick(View view) {
                 ID = id.getText().toString();
@@ -53,6 +54,12 @@ public class AdminAddUser extends AppCompatActivity {
                 }
             }
         });
+    }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.actionbar_logout, menu);
+        return true;
     }
 }

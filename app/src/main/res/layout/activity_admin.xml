@@ -9,14 +9,14 @@
 
     <Button
         android:id="@+id/btn_create_demo_data"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="240dp"
+        android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginStart="38dp"
         android:layout_marginTop="57dp"
         android:layout_marginEnd="38dp"
         android:layout_marginBottom="40dp"
-        android:backgroundTint="#C5B3A4"
+        android:backgroundTint="#bb937e"
         android:text="@string/create_demo_data"
         android:textSize="@dimen/user_info_string_size"
         app:layout_constraintBottom_toTopOf="@+id/btnAdminView"

@@ -88,8 +88,10 @@ public class MainActivity extends BasementActivity {
             if (getUserAccount().getId().equals(ConstantValue.ADMIN_ACCOUNT_ID)
                     && getUserAccount().getPassword().equals(ConstantValue.ADMIN_ACCOUNT_PASSWORD)) {
 
-                DBQuery.findUserInUSERS(mDbHelper, getUserAccount());
-                mStartForResult.launch(new Intent(this, AdminActivity.class));
+                UserAccount adminUA = DBQuery.findUserInUSERS(mDbHelper, getUserAccount());
+                if (adminUA.isAdmin()) {
+                    mStartForResult.launch(new Intent(this, AdminActivity.class));
+                }
             }
         } else {
             if (!mLoginActivityIsRunning) {

@@ -3,6 +3,8 @@ package com.example.bookmanageapp;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -11,7 +13,7 @@ import android.widget.Toast;
 import com.example.bookmanageapp.database.DBHelper;
 import com.example.bookmanageapp.database.DBQuery;
 
-public class AdminUpdate extends AppCompatActivity {
+public class AdminUpdate extends BasementActivity {
 
     DBHelper dbHelper = new DBHelper(this);
 
@@ -30,7 +32,7 @@ public class AdminUpdate extends AppCompatActivity {
 
         update.setOnClickListener(new View.OnClickListener() {
 
-            String Name,Age,Address,Id;
+            String Name, Age, Address, Id;
             boolean isUpdated;
 
             @Override
@@ -41,21 +43,21 @@ public class AdminUpdate extends AppCompatActivity {
                 Address = address.getText().toString();
                 Id = id.getText().toString();
 
-                isUpdated = DBQuery.updateRec(dbHelper, Id,Name,Age,Address);
+                isUpdated = DBQuery.updateRec(dbHelper, Id, Name, Age, Address);
 
-                if(isUpdated){
+                if (isUpdated) {
                     Toast.makeText(AdminUpdate.this, "Account is updated", Toast.LENGTH_SHORT).show();
-                }
-                else{
+                } else {
                     Toast.makeText(AdminUpdate.this, "Account is not updated", Toast.LENGTH_SHORT).show();
                 }
-
             }
         });
+    }
 
-
-
-
-
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.actionbar_logout, menu);
+        return true;
     }
 }
