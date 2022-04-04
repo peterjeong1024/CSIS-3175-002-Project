@@ -502,10 +502,10 @@ public class DBQuery {
         SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
 
-        values.put(DBQuery.USERS.COLUMN_NAME_USERNAME, name);
-        values.put(DBQuery.USERS.COLUMN_NAME_USERAGE, age);
-        values.put(DBQuery.USERS.COLUMN_NAME_USERADDR, address);
-        int u = sqLiteDatabase.update(DBQuery.USERS.TABLE_NAME, values, "UserID=?",
+        values.put(USERS.COLUMN_NAME_USERNAME, name);
+        values.put(USERS.COLUMN_NAME_USERAGE, age);
+        values.put(USERS.COLUMN_NAME_USERADDR, address);
+        int u = sqLiteDatabase.update(USERS.TABLE_NAME, values, "UserID=?",
                 new String[]{id});
         if (u > 0)
             return true;
@@ -514,16 +514,17 @@ public class DBQuery {
     }
 
 
-    public static Boolean addRecord(DBHelper dbHelper, String id, String password, String name, String age, String address, String genre) {
+    public static Boolean addRecord(DBHelper dbHelper, String id, String password, String name, String age, String address, String genre, boolean isAdmin) {
         SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
 
-        values.put(DBQuery.USERS.COLUMN_NAME_USERNAME, name);
-        values.put(DBQuery.USERS.COLUMN_NAME_USERAGE, age);
-        values.put(DBQuery.USERS.COLUMN_NAME_USERADDR, address);
-        values.put(DBQuery.USERS.COLUMN_NAME_GENRE, genre);
-        values.put(DBQuery.USERS.COLUMN_NAME_USERID, id);
-        values.put(DBQuery.USERS.COLUMN_NAME_USERPW, password);
+        values.put(USERS.COLUMN_NAME_USERNAME, name);
+        values.put(USERS.COLUMN_NAME_USERAGE, age);
+        values.put(USERS.COLUMN_NAME_USERADDR, address);
+        values.put(USERS.COLUMN_NAME_GENRE, genre);
+        values.put(USERS.COLUMN_NAME_USERID, id);
+        values.put(USERS.COLUMN_NAME_USERPW, password);
+        values.put(USERS.COLUMN_NAME_ISADMIN, isAdmin);
 
         long r = sqLiteDatabase.insert(DBQuery.USERS.TABLE_NAME, null, values);
 
@@ -537,11 +538,11 @@ public class DBQuery {
         SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
 
-        values.put(DBQuery.MESSAGES.COLUMN_NAME_SENDERID, "admin");
-        values.put(DBQuery.MESSAGES.COLUMN_NAME_USERID, id);
-        values.put(DBQuery.MESSAGES.COLUMN_NAME_SENTMSGTEXT, message);
+        values.put(MESSAGES.COLUMN_NAME_SENDERID, "admin");
+        values.put(MESSAGES.COLUMN_NAME_USERID, id);
+        values.put(MESSAGES.COLUMN_NAME_SENTMSGTEXT, message);
 
-        long r = sqLiteDatabase.insert(DBQuery.MESSAGES.TABLE_NAME, null, values);
+        long r = sqLiteDatabase.insert(MESSAGES.TABLE_NAME, null, values);
 
         if (r > 0)
             return true;

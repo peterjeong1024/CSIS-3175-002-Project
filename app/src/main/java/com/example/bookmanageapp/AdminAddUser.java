@@ -45,7 +45,7 @@ public class AdminAddUser extends BasementActivity {
                 Address = address.getText().toString();
                 Genre = genre.getText().toString();
 
-                isInserted = DBQuery.addRecord(dbHelper, ID, Password, Name, Age, Address, Genre);
+                isInserted = DBQuery.addRecord(dbHelper, ID, Password, Name, Age, Address, Genre, false);
 
                 if (isInserted) {
                     Toast.makeText(AdminAddUser.this, "Account is Created", Toast.LENGTH_SHORT).show();
